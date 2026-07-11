@@ -76,7 +76,7 @@ async function probeStatus() { try { const r = await fetch(SYNC.endpoint, { cach
 function renderGate(msg) {
   document.body.classList.add('gated');
   document.getElementById('app').innerHTML = `<div class="gate"><div class="gate-card">
-    <div class="gate-emoji">🐻‍❄️🔒</div>
+    <img class="gate-icon" src="assets/icons/APP_icon.png" alt="新熊记" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'gate-emoji',textContent:'🐻‍❄️'}))">
     <div class="gate-title">新熊记</div>
     <div class="gate-sub">输入口令进入</div>
     <input id="gate-input" class="sync-input" type="password" autocomplete="off" placeholder="访问口令">

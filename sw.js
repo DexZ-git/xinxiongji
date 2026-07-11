@@ -1,5 +1,5 @@
 // 新熊记 service worker —— 缓存外壳，断网可开
-const CACHE = 'xiongji-v6';
+const CACHE = 'xiongji-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -11,9 +11,9 @@ const ASSETS = [
   './assets/icons/APP_icon.png',
   './assets/icons/tab_2_panda_basket_512.png',
   './assets/icons/tab_3_bear_chef_512.png',
-  './assets/icons/tab_4_bear_scooter_512.png'
+  './assets/icons/tab_1_eggplant_512.png'
 ];
-// 备用第 4 个 tab 图标：tab_1_eggplant_512.png（灵感）
+// 备用 tab 图标：tab_4_bear_scooter_512.png（采购）
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(() => {})));
