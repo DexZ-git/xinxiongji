@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "xiongji",
+      "runtimeExecutable": "perl",
+      "runtimeArgs": ["server.pl", "4200"],
+      "port": 4200
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+/* 新熊记 —— 视觉规范：Cozy Clean Cookbook
+   规范源：assets/UI/（design_tokens.json + recipe_app_ui_reference.md）
+   奶油暖底、卡片白、巧克力描边/文字、番茄红 CTA、蛋黄黄强调、圆胖 pill、浮起圆角 tabbar。 */
+
+:root {
+  --cream: #FFF7EA;      /* 页面底 */
+  --warm-blob: #FFF1D9;  /* 柔和色块 / 占位底 */
+  --card: #FFFCF4;       /* 卡片 */
+  --butter: #FFD76A;     /* 蛋黄黄：active 胶囊 / 强调标签 */
+  --butter-soft: #FFECBE;
+  --tomato: #FF806B;     /* 主 CTA */
+  --tomato-ink: #E0563F; /* 番茄系文字强调（形态高亮） */
+  --blush: #FFB9B0;
+  --mint: #BEEFD8;
+  --sky: #B7EEF0;
+  --leaf: #8EC66A;
+  --ink: #4C2A22;        /* 巧克力：主文字 / 描边 */
+  --ink-soft: #8A7A70;   /* 暖灰：次级文字 */
+  --line: #E9C9A6;       /* 浅米棕描边 */
+  --line-soft: #F0DFC4;
+  --shadow: 0 6px 20px rgba(76, 42, 34, .10);
+  --shadow-sm: 0 2px 8px rgba(76, 42, 34, .06);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+  --tabbar-h: 66px;
+  --r-card: 22px;
+  --r-lg: 28px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cream: #241a13;
+    --warm-blob: #2e2318;
+    --card: #2b2018;
+    --butter: #ffcf5c;
+    --butter-soft: #4a3a1c;
+    --tomato: #ff8b76;
+    --tomato-ink: #ffb0a0;
+    --blush: #6b4038;
+    --mint: #2f4a3d;
+    --sky: #2c4548;
+    --leaf: #6ea34e;
+    --ink: #f6ecdd;
+    --ink-soft: #b8a892;
+    --line: #4a3a28;
+    --line-soft: #3a2e20;
+    --shadow: 0 6px 20px rgba(0, 0, 0, .35);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, .25);
+  }
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
+    "PingFang SC", "MiSans", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+#app {
+  padding: calc(var(--safe-top) + 10px) 20px calc(var(--tabbar-h) + var(--safe-bot) + 30px);
+  max-width: 640px; margin: 0 auto;
+}
+.boot { text-align: center; color: var(--ink-soft); padding: 40vh 0; }
+
+/* ---------- header ---------- */
+.hd { display: flex; align-items: baseline; gap: 10px; padding: 6px 2px 12px; }
+.hd h1 { font-size: 28px; font-weight: 700; margin: 0; letter-spacing: .5px; }
+.hd .sub { color: var(--ink-soft); font-size: 13px; }
+.back {
+  display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--line);
+  color: var(--ink); font-size: 14px; font-weight: 600; padding: 7px 14px; border-radius: 999px;
+  cursor: pointer; margin-bottom: 6px; box-shadow: var(--shadow-sm);
+}
+.rowbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+/* ---------- category section ---------- */
+.cat { margin: 20px 0 10px; font-size: 14px; font-weight: 700; color: var(--ink-soft); letter-spacing: .5px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ---------- recipe card ---------- */
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card);
+  overflow: hidden; cursor: pointer; transition: transform .12s ease; box-shadow: var(--shadow-sm);
+}
+.card:active { transform: scale(.97); }
+.thumb {
+  aspect-ratio: 1 / 1; background: var(--warm-blob) center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center; font-size: 42px;
+}
+.thumb.has-img { font-size: 0; }
+.card .name { padding: 10px 12px; font-weight: 600; font-size: 15px; }
+
+/* ---------- pills / chips ---------- */
+.chip {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px; margin: 0 7px 7px 0;
+  background: var(--warm-blob); border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: var(--ink);
+}
+.chip .form { color: var(--tomato-ink); font-weight: 700; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid var(--line); border-radius: 999px; font-size: 16px; font-weight: 600; padding: 12px 20px;
+  cursor: pointer; background: var(--card); color: var(--ink);
+}
+.btn.primary { background: var(--tomato); color: #fff; border: none; box-shadow: 0 4px 14px rgba(255, 128, 107, .38); }
+.btn.secondary { background: var(--butter); color: var(--ink); border: none; }
+.btn.block { width: 100%; }
+.btn.sm { padding: 8px 15px; font-size: 14px; }
+.btn.ghost { background: none; border: none; box-shadow: none; }
+.btn.danger { color: var(--tomato-ink); }
+.add-btn {
+  border: 1px solid var(--line); background: var(--butter); color: var(--ink); font-weight: 800; font-size: 18px;
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer; line-height: 1; transition: transform .1s;
+}
+.add-btn:active { transform: scale(.9); }
+.add-btn.on { background: var(--leaf); color: #fff; border-color: transparent; }
+
+/* ---------- detail ---------- */
+.hero {
+  aspect-ratio: 16 / 10; border-radius: var(--r-lg); background: var(--warm-blob) center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center; font-size: 60px; margin-bottom: 14px;
+  border: 1px solid var(--line); position: relative; box-shadow: var(--shadow-sm);
+}
+.hero.has-img { font-size: 0; }
+.hero.dish { aspect-ratio: 1 / 1; }   /* 菜品成品图偏方形，用方形 hero 完整定格、不裁主体 */
+.hero .cam {
+  position: absolute; right: 12px; bottom: 12px; background: rgba(76, 42, 34, .62); color: #fff;
+  border: none; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.sec-title { font-size: 13px; font-weight: 700; color: var(--ink-soft); letter-spacing: .5px; margin: 22px 0 9px; }
+.steps-group { margin-bottom: 16px; }
+.steps-group h4 { margin: 0 0 8px; font-size: 16px; color: var(--ink); font-weight: 700; }
+.steps-group ol { margin: 0; padding-left: 22px; }
+.steps-group ol li { margin-bottom: 6px; padding-left: 2px; }
+.steps-group ol li::marker { color: var(--tomato-ink); font-weight: 700; }
+
+/* ---------- segmented ---------- */
+.seg { display: flex; background: var(--warm-blob); border: 1px solid var(--line); border-radius: 16px; padding: 4px; margin: 6px 0 16px; }
+.seg button { flex: 1; border: none; background: none; padding: 10px 4px; border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+.seg button.on { background: var(--card); color: var(--ink); box-shadow: var(--shadow-sm); }
+
+/* ---------- prep list ---------- */
+.prep-group .lbl { font-size: 13px; font-weight: 700; color: var(--ink-soft); margin: 16px 0 6px; letter-spacing: .5px; }
+.prep-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--line-soft); }
+.prep-row:last-child { border-bottom: none; }
+.prep-row input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--tomato); flex: none; }
+.prep-row .body { flex: 1; }
+.prep-row .nm { font-weight: 700; }
+.prep-row.done .nm { text-decoration: line-through; color: var(--ink-soft); }
+.prep-row .uses { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+.prep-row .uses b { color: var(--tomato-ink); font-weight: 700; }
+details.fold { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 4px; }
+details.fold summary { list-style: none; cursor: pointer; font-size: 13px; font-weight: 700; color: var(--ink-soft); padding: 13px 2px; letter-spacing: .5px; }
+details.fold summary::-webkit-details-marker { display: none; }
+details.fold summary::after { content: " ▾"; }
+details.fold[open] summary::after { content: " ▴"; }
+
+/* ---------- cook: accordion ---------- */
+.acc { border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; margin-bottom: 12px; background: var(--card); box-shadow: var(--shadow-sm); }
+.acc > .head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; font-weight: 700; }
+.acc > .head .em { font-size: 22px; }
+.acc > .head .dish-thumb { width: 40px; height: 40px; border-radius: 12px; flex: none;
+  background: var(--warm-blob) center/cover no-repeat; }
+/* 烹制页：展开后顶部一张柔化边缘的成品图，边缘渐隐融入卡片（符合 cozy 软糯语言） */
+.cook-banner { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px;
+  background: var(--warm-blob) center/cover no-repeat; margin: 2px 0 14px; }
+.cook-banner::after { content: ''; position: absolute; inset: 0; border-radius: 16px; pointer-events: none;
+  box-shadow: inset 0 -30px 26px -12px var(--card), inset 0 26px 22px -16px var(--card),
+              inset 34px 0 26px -22px var(--card), inset -34px 0 26px -22px var(--card); }
+.acc > .head .arr { margin-left: auto; color: var(--ink-soft); transition: transform .15s; }
+.acc.open > .head { background: var(--warm-blob); }
+.acc.open > .head .arr { transform: rotate(90deg); }
+.acc > .body { padding: 4px 16px 12px; display: none; }
+.acc.open > .body { display: block; }
+
+/* ---------- cook: horizontal tabs ---------- */
+.htabs { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; -webkit-overflow-scrolling: touch; }
+.htabs button { flex: none; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-weight: 600; font-size: 14px; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
+.htabs button.on { background: var(--butter); color: var(--ink); border-color: transparent; }
+
+/* ---------- cook: checklist ---------- */
+.ck-line { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; }
+.ck-line input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--tomato); flex: none; }
+.ck-line.done span { text-decoration: line-through; color: var(--ink-soft); }
+
+/* ---------- cart bar (menu building) ---------- */
+.cartbar {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--tabbar-h) + var(--safe-bot) + 12px);
+  width: calc(100% - 32px); max-width: 600px;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 20px; z-index: 40; box-shadow: var(--shadow);
+}
+.cartbar .n { font-weight: 700; }
+.cartbar .btn { margin-left: auto; }
+
+/* ---------- menu list card ---------- */
+.menu-card { display: flex; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-card); padding: 12px; margin-bottom: 14px; cursor: pointer; box-shadow: var(--shadow-sm); }
+.menu-card .cov { width: 74px; height: 74px; border-radius: 16px; background: var(--warm-blob) center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+.menu-card .cov.has-img { font-size: 0; }
+.menu-card .mt { font-weight: 700; font-size: 17px; }
+.menu-card .ms { color: var(--ink-soft); font-size: 13px; margin-top: 3px; }
+
+.empty { text-align: center; color: var(--ink-soft); padding: 48px 20px; }
+.empty .big { font-size: 50px; margin-bottom: 12px; }
+
+/* ---------- tab bar：浮起圆角容器 + active 蛋黄胶囊 ---------- */
+.tabbar {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--safe-bot) + 10px);
+  width: calc(100% - 24px); max-width: 460px; height: var(--tabbar-h);
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  display: flex; z-index: 50; box-shadow: var(--shadow); overflow: hidden;
+}
+.tab { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 3px; color: var(--ink-soft); cursor: pointer; }
+.tab-ic-wrap { display: inline-flex; align-items: center; justify-content: center; padding: 4px 16px; border-radius: 16px; transition: background-color .15s; }
+.tab-ic { width: 30px; height: 30px; object-fit: contain; opacity: .82; display: block; }
+.tab-emoji { font-size: 24px; line-height: 30px; opacity: .82; }
+.tab.on { color: var(--ink); }
+.tab.on .tab-ic-wrap { background-color: var(--butter); }
+.tab.on .tab-ic, .tab.on .tab-emoji { opacity: 1; }
+.tab-label { font-size: 11px; font-weight: 600; }
+
+.hint { background: var(--warm-blob); border: 1px solid var(--line-soft); border-radius: 14px; padding: 12px 15px;
+  color: var(--ink-soft); font-size: 13px; margin: 12px 0; line-height: 1.5; }
+
+/* ---------- header row ---------- */
+.hd-row { padding: 6px 2px 10px; }
+.hd-row h1 { font-size: 28px; font-weight: 700; margin: 0; }
+.msub { color: var(--ink-soft); font-size: 13px; }
+.op-h1 { font-size: 24px; font-weight: 800; margin: 4px 0 14px; }
+.chev { margin-left: auto; color: var(--ink-soft); font-size: 22px; align-self: center; }
+
+/* ---------- category filter chips ---------- */
+.chips-row {
+  display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; -webkit-overflow-scrolling: touch;
+  position: sticky; top: 0; z-index: 20; background: var(--cream); scrollbar-width: none;
+}
+.chips-row::-webkit-scrollbar { display: none; }
+.fchip { flex: none; padding: 7px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+  font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
+.fchip.on { background: var(--butter); color: var(--ink); border-color: transparent; }
+
+/* ---------- image-select state ---------- */
+.card { position: relative; }
+.card.sel { outline: 3px solid var(--tomato); outline-offset: -1px; }
+.card.sel .thumb { filter: brightness(.9); }
+.selbadge { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(255, 252, 244, .9); border: 1.5px solid var(--line); display: flex; align-items: center;
+  justify-content: center; font-size: 15px; font-weight: 800; color: var(--ink); }
+.selbadge.on { background: var(--tomato); color: #fff; border-color: transparent; }
+
+/* ---------- select bar (点菜浮条) ---------- */
+.selectbar {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--tabbar-h) + var(--safe-bot) + 14px);
+  width: calc(100% - 32px); max-width: 600px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--shadow); z-index: 40; overflow: hidden;
+}
+.sel-list { max-height: 44vh; overflow-y: auto; padding: 8px 8px 2px; }
+.sel-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px;
+  border-bottom: 1px solid var(--line-soft); font-weight: 600; }
+.sel-item:last-child { border-bottom: none; }
+.sel-item button { border: none; background: var(--warm-blob); color: var(--ink-soft); width: 26px; height: 26px;
+  border-radius: 50%; cursor: pointer; font-size: 13px; }
+.selectbar-main { display: flex; align-items: stretch; gap: 12px; padding: 8px 10px; }
+.sel-count { flex: 1; text-align: left; border: none; background: none; font-weight: 700; color: var(--ink);
+  font-size: 15px; cursor: pointer; padding: 10px 8px; border-radius: 14px; }
+.sel-count:active { background: var(--warm-blob); }
+.sel-count .peek { display: block; font-size: 12px; font-weight: 500; color: var(--ink-soft); margin-top: 2px; }
+.selectbar-main .btn { flex: none; align-self: center; }
+.btn[disabled] { opacity: .45; pointer-events: none; }
+
+/* ---------- menu operation cards ---------- */
+.op-cards { display: flex; flex-direction: column; gap: 12px; }
+.op-card { display: flex; align-items: center; gap: 14px; text-align: left; width: 100%;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); padding: 16px;
+  cursor: pointer; box-shadow: var(--shadow-sm); }
+.op-card:active { transform: scale(.99); }
+.op-card .oe { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex: none; }
+.op-card.prep .oe { background: var(--mint); }
+.op-card.cook .oe { background: var(--blush); }
+.op-card.mem .oe { background: var(--butter); }
+.op-card .ob { display: flex; flex-direction: column; gap: 2px; }
+.op-card .ot { font-size: 18px; font-weight: 700; }
+.op-card .od { font-size: 13px; color: var(--ink-soft); }
+
+/* ---------- menu list chevron / memory ---------- */
+.menu-card .chev { font-size: 24px; }
+.mem-name { font-weight: 800; font-size: 20px; }
+
+/* ---------- sync input ---------- */
+.sync-input { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--card); color: var(--ink); font-size: 15px; margin-bottom: 10px; }
+.sync-input:focus { outline: none; border-color: var(--tomato); }

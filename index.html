@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#FFF7EA">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="新熊记">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/APP_icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>新熊记</title>
+</head>
+<body>
+  <div id="app"><div class="boot">正在生火…</div></div>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="tab" data-action="go-tab" data-tab="recipes">
+      <span class="tab-ic-wrap"><img class="tab-ic" src="assets/icons/tab_2_panda_basket_512.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'tab-emoji',textContent:'📖'}))"></span>
+      <span class="tab-label">菜谱</span>
+    </button>
+    <button class="tab" data-action="go-tab" data-tab="menus">
+      <span class="tab-ic-wrap"><img class="tab-ic" src="assets/icons/tab_3_bear_chef_512.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'tab-emoji',textContent:'📝'}))"></span>
+      <span class="tab-label">菜单</span>
+    </button>
+    <button class="tab" data-action="go-tab" data-tab="more">
+      <span class="tab-ic-wrap"><img class="tab-ic" src="assets/icons/tab_4_bear_scooter_512.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'tab-emoji',textContent:'⚙️'}))"></span>
+      <span class="tab-label">更多</span>
+    </button>
+  </nav>
+
+  <input type="file" id="filepick" accept="image/*" class="sr-only">
+
+  <script src="app.js"></script>
+</body>
+</html>

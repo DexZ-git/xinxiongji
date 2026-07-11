@@ -1,0 +1,479 @@
+{
+  "recipes": [
+    {
+      "id": "jiang-cong-chao-xie",
+      "name": "姜葱炒蟹",
+      "category": "海鲜",
+      "photo": "assets/dishes/jiang-cong-chao-xie.png",
+      "main": [
+        { "ing": "crab", "note": "剁掉尖尖的位置、拍蟹腿、冲洗" }
+      ],
+      "aromatics": [
+        { "ing": "scallion", "form": "大段", "note": "多切大段，葱头拍一拍" },
+        { "ing": "garlic", "form": "片" },
+        { "ing": "ginger", "form": "片" }
+      ],
+      "seasonings": ["salt", "starch", "light-soy", "sugar", "oyster-sauce", "pepper", "sesame-oil", "cooking-wine"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "螃蟹剁掉尖尖的位置、拍蟹腿，冲洗",
+          "葱多切大段，葱头拍一拍",
+          "蒜片、姜片若干",
+          "酱汁：1/3 碗水，半茶匙盐，一勺生粉，2 勺生抽，1 勺糖，1 勺耗油，胡椒粉少许，芝麻油少许"
+        ]},
+        { "group": "一炒", "items": [
+          "锅起烟多放油，后续都中火煎",
+          "蟹蘸一点生粉，下锅煎至金黄",
+          "蟹捞出备用，蟹油留在锅里"
+        ]},
+        { "group": "二炒", "items": [
+          "蟹油内加姜片、葱头、蒜片，转大火爆香味",
+          "蟹都加进去，翻炒",
+          "淋两圈料酒，翻炒",
+          "加一点开水，盖盖，焗 1 分钟",
+          "加葱段翻炒，加酱汁，翻炒几十秒"
+        ]}
+      ]
+    },
+    {
+      "id": "jia-shao-za-yu",
+      "name": "家烧杂鱼（虾）",
+      "category": "海鲜",
+      "photo": "assets/dishes/jia-shao-za-yu.png",
+      "main": [
+        { "ing": "seafish", "note": "海鱼抹一点盐给底味" },
+        { "ing": "shrimp", "note": "看情况自己买" },
+        { "ing": "pork-belly", "form": "片" },
+        { "ing": "rice-cake", "form": "斜切长片", "note": "可选，买宁波年糕" }
+      ],
+      "aromatics": [
+        { "ing": "shallot", "form": "整" },
+        { "ing": "ginger", "form": "粒" },
+        { "ing": "garlic", "form": "粒" },
+        { "ing": "dried-chili", "form": "段" },
+        { "ing": "scallion", "form": "段", "note": "或蒜苗，葱熟出锅" }
+      ],
+      "seasonings": ["salt", "cooking-wine", "sugar", "light-soy", "dark-soy", "vinegar"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "海鱼抹一点盐给底味",
+          "其他：五花肉片、红葱头、生姜粒、蒜粒、干辣椒段（可备年糕片，买宁波年糕斜切长片）"
+        ]},
+        { "group": "炒", "items": [
+          "多加油，放五花肉出猪油（也可直接用猪油），中火",
+          "出油后 分别 加红葱头、姜粒、蒜粒，炒出香味",
+          "配料都焦黄，放入一点干辣椒，简单翻炒一下",
+          "撇开配料，下鱼平铺，中火煎约 1 分钟！！！旋转锅底，均匀受热，不能粘锅",
+          "锅边 2 圈酒",
+          "加开水至没过鱼高度，放年糕片",
+          "盖盖闷煮 4-5min",
+          "开盖，少许白糖、2 勺生抽、1 勺老抽，煮 2 分钟——此时可以考虑开大火收汁（调味可根据口味少加盐、醋）",
+          "加葱或蒜苗，葱熟出锅"
+        ]}
+      ]
+    },
+    {
+      "id": "quan-shui-niu-rou",
+      "name": "泉水牛肉",
+      "category": "肉禽",
+      "photo": "assets/dishes/quan-shui-niu-rou.png",
+      "main": [
+        { "ing": "beef", "note": "煮到有点卷曲" },
+        { "ing": "celery", "form": "碎", "note": "西芹碎" }
+      ],
+      "aromatics": [
+        { "ing": "pickled-chili" }
+      ],
+      "seasonings": ["salt", "pepper", "vinegar"],
+      "steps": [
+        { "group": "制作", "items": [
+          "锅烧水（可加卤牛肉清白高汤）",
+          "加泡椒、盐巴（注意根据水的量来放）、白胡椒粉",
+          "放肉、煮到有点卷曲，加白醋、放西芹碎，出锅"
+        ]}
+      ]
+    },
+    {
+      "id": "lu-niu-jian-zi",
+      "name": "卤牛腱子",
+      "category": "肉禽",
+      "photo": "assets/dishes/lu-niu-jian-zi.png",
+      "main": [
+        { "ing": "beef-shank", "note": "冷水泡出血水 3 小时，中间换一次水" }
+      ],
+      "aromatics": [
+        { "ing": "onion", "form": "半个" },
+        { "ing": "scallion", "form": "葱结" },
+        { "ing": "ginger", "form": "块" }
+      ],
+      "seasonings": ["bay-leaf", "sichuan-pepper", "white-peppercorn", "salt"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "冷水泡牛腱子，出血水、泡 3 小时，中间换一次"
+        ]},
+        { "group": "焯水", "items": [
+          "冷水入锅，持续撇浮沫"
+        ]},
+        { "group": "高压锅", "items": [
+          "放热水、放牛肉，加半个洋葱、葱结、姜块、香叶几片、十几颗花椒、十几颗白胡椒粒、足量的盐。上汽后小火压 8 分钟"
+        ]}
+      ]
+    },
+    {
+      "id": "kao-ji-chi",
+      "name": "烤鸡翅",
+      "category": "肉禽",
+      "photo": "assets/dishes/kao-ji-chi.png",
+      "main": [
+        { "ing": "chicken-wing" }
+      ],
+      "aromatics": [
+        { "ing": "scallion", "note": "葱姜腌料" },
+        { "ing": "ginger" }
+      ],
+      "seasonings": ["cooking-wine", "sichuan-pepper", "light-soy", "oyster-sauce", "salt"],
+      "steps": [
+        { "group": "腌制", "items": [
+          "葱姜、料酒、花椒、生抽、耗油、盐，30min",
+          "把腌料去掉"
+        ]},
+        { "group": "空气炸锅", "items": [
+          "鸡翅模式烤约 15min，翻面，再约 15min"
+        ]}
+      ]
+    },
+    {
+      "id": "suan-rong-tong-cai",
+      "name": "蒜蓉通菜",
+      "category": "蔬菜",
+      "photo": "assets/dishes/suan-rong-tong-cai.png",
+      "main": [
+        { "ing": "water-spinach", "note": "菜根、嫩叶分开，菜根拍拍、撕开" }
+      ],
+      "aromatics": [
+        { "ing": "garlic", "form": "颗粒微拍" }
+      ],
+      "seasonings": ["salt", "oil"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "清洗，菜根、嫩叶分开，菜根拍拍、撕开",
+          "大蒜切颗粒微拍"
+        ]},
+        { "group": "制作", "items": [
+          "开水、盐、焯水",
+          "菜梗断生捞出，冷水冲凉备用，直接调味加食用盐一勺左右",
+          "锅热烧油，下大蒜暴香，火不能太大，暴香后转中火",
+          "菜叶菜梗和一小碗开水一起下锅翻炒，30 秒出锅（注意水不要太多、炒菜大火快炒）"
+        ]}
+      ]
+    },
+    {
+      "id": "pai-gu-shan-yao-tang",
+      "name": "排骨山药汤",
+      "category": "汤羹",
+      "photo": "assets/dishes/pai-gu-shan-yao-tang.png",
+      "main": [
+        { "ing": "pork-rib" },
+        { "ing": "yam" },
+        { "ing": "morel" }
+      ],
+      "aromatics": [
+        { "ing": "da-cong" },
+        { "ing": "ginger", "form": "片" }
+      ],
+      "seasonings": ["cooking-wine", "salt"],
+      "steps": [
+        { "group": "焯水", "items": [
+          "放大葱、姜片、料酒"
+        ]},
+        { "group": "高压锅打", "items": [
+          "先放肉、水、姜片、盐，上汽，转小火，打 2 分钟",
+          "静置放气",
+          "第二次打：放山药、羊肚菌，再上汽就关"
+        ]}
+      ]
+    },
+    {
+      "id": "cong-jiang-cheng-zi",
+      "name": "葱姜蛏子王",
+      "category": "海鲜",
+      "photo": "assets/dishes/cong-jiang-cheng-zi.png",
+      "main": [
+        { "ing": "razor-clam", "note": "约 650 克；烫 3 秒过冷河，肉壳分离摘黑膜" }
+      ],
+      "aromatics": [
+        { "ing": "scallion", "form": "白葱段 + 葱绿段" },
+        { "ing": "ginger", "form": "片" },
+        { "ing": "garlic", "form": "片" },
+        { "ing": "birdseye-chili", "form": "圈" },
+        { "ing": "butter", "form": "一小块" }
+      ],
+      "seasonings": ["salt", "sugar", "pepper", "light-soy", "starch", "cooking-wine"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "酱汁：半勺盐，半勺糖，白胡椒粉少许，生抽少许，生粉少许，后面炒出的汁水（650 克蛏子的量）"
+        ]},
+        { "group": "烫 + 过冷河", "items": [
+          "水开，加一圈酒，烫 3 秒，马上捞出过冷河",
+          "肉壳分离，摘掉黑膜",
+          "壳倒扣摆在盘底做摆盘，不用太多"
+        ]},
+        { "group": "炒", "items": [
+          "白葱段、姜片、蒜片爆香，加一小块黄油",
+          "蛏子平铺，大火煎",
+          "煎出汁水，把汁水倒到小碗里（小半碗）",
+          "锅回灶台，加一圈酒继续翻炒",
+          "酱汁分两次加，让蛏子慢慢吸收",
+          "蛏子发卷就熟了，加入葱绿段，小米椒圈，出锅"
+        ]}
+      ]
+    },
+    {
+      "id": "bai-zhuo-cai-xin",
+      "name": "白灼菜心",
+      "category": "蔬菜",
+      "photo": "assets/dishes/bai-zhuo-cai-xin.png",
+      "main": [
+        { "ing": "choy-sum" }
+      ],
+      "aromatics": [
+        { "ing": "garlic", "form": "蒜头", "note": "爆香，中小火" }
+      ],
+      "seasonings": ["salt", "oil", "steamed-fish-soy"],
+      "steps": [
+        { "group": "焯水", "items": [
+          "水开加盐、油，菜心放入烫 3 分钟左右捞出备用"
+        ]},
+        { "group": "炒酱汁", "items": [
+          "加油、蒜头爆香（中小火试试），加蒸鱼豉油少许、开水少许，烧开后淋到菜上"
+        ]}
+      ]
+    },
+    {
+      "id": "qing-zheng-dai-yu",
+      "name": "清蒸带鱼",
+      "category": "海鲜",
+      "photo": "assets/dishes/qing-zheng-dai-yu.png",
+      "main": [
+        { "ing": "hairtail", "note": "切段洗净，单面切花刀" }
+      ],
+      "aromatics": [
+        { "ing": "ginger", "form": "片" },
+        { "ing": "scallion", "form": "葱白段 + 葱花" }
+      ],
+      "seasonings": ["salt", "cooking-wine", "steamed-fish-soy"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "切段洗净，单面切花刀",
+          "摆盘、撒盐入底味，铺姜片、葱白段，倒料酒（盘底都是料酒为佳）"
+        ]},
+        { "group": "制作", "items": [
+          "大火蒸 5 分钟",
+          "挑去葱段，底部蒸鱼水汤汁都倒掉",
+          "撒葱花，热油炝，淋蒸鱼豉油（注意油不要太多）"
+        ]}
+      ]
+    },
+    {
+      "id": "cong-you-bao-yu",
+      "name": "葱油鲍鱼",
+      "category": "海鲜",
+      "photo": "assets/dishes/cong-you-bao-yu.png",
+      "main": [
+        { "ing": "abalone", "note": "洗净切花刀，连壳带肉煮 3 分钟左右" }
+      ],
+      "aromatics": [
+        { "ing": "scallion", "form": "葱花" }
+      ],
+      "seasonings": ["steamed-fish-soy", "oil"],
+      "steps": [
+        { "group": "制作", "items": [
+          "洗净切花刀",
+          "连壳带肉一起煮 3 分钟左右",
+          "捞出摆盘，撒葱花，倒蒸鱼豉油，淋热油"
+        ]}
+      ]
+    },
+    {
+      "id": "lu-sun-chao-yang-du-jun",
+      "name": "芦笋炒羊肚菌",
+      "category": "蔬菜",
+      "photo": "assets/dishes/lu-sun-chao-yang-du-jun.png",
+      "main": [
+        { "ing": "asparagus", "form": "斜切小段", "note": "去皮，掐不动处摘掉" },
+        { "ing": "morel", "note": "清水浸泡，对半切" }
+      ],
+      "aromatics": [
+        { "ing": "garlic", "form": "片" }
+      ],
+      "seasonings": ["salt", "pepper", "starch", "oyster-sauce", "lard"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "羊肚菌清水浸泡，对半切",
+          "芦笋去皮，掐不动的地方摘掉不要，斜切小段",
+          "料汁（2 人份量）：半勺盐、半勺白胡椒、一勺淀粉、少许耗油、半小碗清水，搅拌化开"
+        ]},
+        { "group": "制作", "items": [
+          "焯水：水开加油，焯烫芦笋、断生捞出；再煮羊肚菌，约 3-4 分钟，煮熟捞出",
+          "炒制：猪油、下蒜片爆香，加芦笋和羊肚菌，倒入料汁翻炒，出锅"
+        ]}
+      ]
+    },
+    {
+      "id": "cong-shao-niu-rou",
+      "name": "葱烧牛肉",
+      "category": "肉禽",
+      "photo": "assets/dishes/cong-shao-niu-rou.png",
+      "main": [
+        { "ing": "beef", "note": "腌制 20 分钟" }
+      ],
+      "aromatics": [
+        { "ing": "scallion", "form": "葱花", "note": "多多的葱花" },
+        { "ing": "garlic", "form": "蓉", "note": "多多的蒜蓉" },
+        { "ing": "butter", "form": "一小盒" }
+      ],
+      "seasonings": ["light-soy", "oyster-sauce", "black-pepper", "starch", "oil", "salt"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "腌肉：一勺半生抽，一勺耗油，适量黑胡椒，一勺淀粉，适量食用油。抓拌均匀，腌制 20 分钟",
+          "其他：切多多的葱花和多多的蒜蓉，一小盒黄油，准备一瓶海盐/玫瑰盐"
+        ]},
+        { "group": "制作", "items": [
+          "锅热倒油，小火放蒜末平铺",
+          "平铺牛肉，中小火翻炒至半熟",
+          "放入黄油继续翻炒",
+          "撒海盐/黑胡椒，出锅"
+        ]}
+      ]
+    },
+    {
+      "id": "yu-wan-tang",
+      "name": "鱼丸汤",
+      "category": "汤羹",
+      "photo": "assets/dishes/yu-wan-tang.png",
+      "main": [
+        { "ing": "fish-ball" },
+        { "ing": "celery", "form": "碎", "note": "大量芹菜" },
+        { "ing": "seaweed", "note": "紫菜" },
+        { "ing": "zhacai", "note": "可选虾皮/榨菜" }
+      ],
+      "aromatics": [
+        { "ing": "garlic-oil", "note": "蒜头油/香油" }
+      ],
+      "seasonings": ["salt", "sesame-oil", "pepper", "vinegar"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "鱼丸，紫菜，大量芹菜，香油/蒜头油，盐，可选虾皮榨菜/白胡椒米醋少许"
+        ]},
+        { "group": "制作", "items": [
+          "鱼丸煮 3 分半（根据鱼丸大小增减时间）",
+          "下紫菜，芹菜，盐，加少许香油（白胡椒米醋），出锅"
+        ]}
+      ]
+    },
+    {
+      "id": "jiu-cai-chao-ji-dan",
+      "name": "韭菜炒鸡蛋",
+      "category": "蔬菜",
+      "photo": "assets/dishes/jiu-cai-chao-ji-dan.png",
+      "main": [
+        { "ing": "chives", "form": "4cm 段", "note": "约 20 根，去末端根 1cm，根叶分开" },
+        { "ing": "egg", "note": "3 个，加生粉液、盐打匀" }
+      ],
+      "aromatics": [],
+      "seasonings": ["starch", "salt", "pepper", "oil"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "一把韭菜洗净（约 20 根上下），去掉最末端的根 1cm，其余切成 4cm 左右的段，根和叶分开",
+          "韭菜叶撒一点生粉搅拌均匀",
+          "打鸡蛋 3 个，可加生粉液、盐，搅拌均匀"
+        ]},
+        { "group": "炒制", "items": [
+          "多加油，油热下蛋（下之前再搅拌一下，防止盐沉底），炒成型捞出",
+          "适量油，先放韭菜根翻炒，再放韭菜叶翻炒，大火",
+          "加入鸡蛋，继续翻炒",
+          "可加少量开水继续翻炒，出锅前加少量胡椒粉和盐再翻炒几下即可"
+        ]}
+      ]
+    },
+    {
+      "id": "yan-ju-hua-luo",
+      "name": "盐焗花螺",
+      "category": "海鲜",
+      "photo": "assets/dishes/yan-ju-hua-luo.png",
+      "main": [
+        { "ing": "sea-snail", "note": "泡水加盐 3-4h，中间可换水" }
+      ],
+      "aromatics": [
+        { "ing": "coarse-salt", "note": "盐焗用，需单独买" }
+      ],
+      "seasonings": ["bay-leaf", "sichuan-pepper", "cooking-wine"],
+      "steps": [
+        { "group": "处理螺", "items": [
+          "泡水加盐，中间可换水，大概 3-4h"
+        ]},
+        { "group": "炒制", "items": [
+          "海盐下锅，小火炒干水分",
+          "加香料，香叶 ×3 + 花椒 30 粒",
+          "盛 1/3 的海盐出来，把花螺码放下锅",
+          "均匀撒盐",
+          "盖盖中小火焗 8 分钟",
+          "最后可淋米酒增香，米酒挥发完开盖"
+        ]}
+      ]
+    },
+    {
+      "id": "liang-ban-bo-cai",
+      "name": "凉拌菠菜",
+      "category": "凉菜",
+      "photo": "assets/dishes/liang-ban-bo-cai.png",
+      "main": [
+        { "ing": "spinach", "note": "500g 焯水 30s，过冷水攥干" }
+      ],
+      "aromatics": [
+        { "ing": "garlic", "form": "末" },
+        { "ing": "sesame", "note": "热油泼香" }
+      ],
+      "seasonings": ["light-soy", "vinegar", "sugar", "sesame-oil", "oil"],
+      "steps": [
+        { "group": "制作", "items": [
+          "500g 菠菜焯水（30s 左右）",
+          "过冷水，攥干水分",
+          "放：蒜末、芝麻，热油泼香；两勺半生抽；两勺醋；半勺糖；一小勺香油",
+          "拌匀装盘，表面撒一点芝麻"
+        ]}
+      ]
+    },
+    {
+      "id": "pai-gu-dun-xiang-gan",
+      "name": "排骨炖香干",
+      "category": "肉禽",
+      "photo": "assets/dishes/pai-gu-dun-xiang-gan.png",
+      "main": [
+        { "ing": "pork-rib" },
+        { "ing": "dried-tofu", "note": "香干" }
+      ],
+      "aromatics": [
+        { "ing": "da-cong" },
+        { "ing": "ginger", "form": "片" },
+        { "ing": "garlic-sprout", "form": "大蒜叶", "note": "断生即可" }
+      ],
+      "seasonings": ["cooking-wine", "light-soy", "sugar", "pepper", "salt"],
+      "steps": [
+        { "group": "备菜", "items": [
+          "排骨、香干、大葱",
+          "姜片"
+        ]},
+        { "group": "初制", "items": [
+          "焯水（新鲜可以不焯水）",
+          "油热爆香姜片，放入排骨炒至两面焦黄。倒 2 圈米酒、3 圈生抽、小勺白糖、少许胡椒粉，炒出香味，倒入开水没过排骨 1 指头"
+        ]},
+        { "group": "压制", "items": [
+          "倒入高压锅，上汽中火压 5min",
+          "泄气后加入香干，最小火压 5 分钟",
+          "开盖加大蒜叶，看咸淡加盐，大蒜叶断生即可"
+        ]}
+      ]
+    }
+  ]
+}

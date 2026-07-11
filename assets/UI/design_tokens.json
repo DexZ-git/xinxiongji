@@ -1,0 +1,55 @@
+{
+  "style_name": "Cozy Clean Cookbook",
+  "goal": "可爱、有食欲、干净；像生活模拟游戏里的温暖小厨房，但不复刻任何现有 IP。",
+  "colors": {
+    "cream": "#FFF7EA",
+    "warm_blob": "#FFF1D9",
+    "card": "#FFFCF4",
+    "butter": "#FFD76A",
+    "tomato": "#FF806B",
+    "blush": "#FFB9B0",
+    "mint": "#BEEFD8",
+    "sky_pan": "#B7EEF0",
+    "leaf": "#8EC66A",
+    "chocolate": "#4C2A22",
+    "warm_gray": "#8A7A70",
+    "border_warm": "#E9C9A6"
+  },
+  "typography": {
+    "preferred_zh": "PingFang SC / MiSans / Noto Sans CJK SC / system-ui rounded fallback",
+    "title_sp": "28-32, weight 600-700",
+    "card_title_sp": "18-22, weight 600",
+    "body_sp": "15-16, line-height 1.4-1.5",
+    "label_sp": "11-13, weight 500-600"
+  },
+  "layout": {
+    "grid": "8pt",
+    "page_margin": "20-24pt",
+    "card_radius": "24-32pt",
+    "button_radius": "pill / 50% height",
+    "tabbar_radius": "28-36pt"
+  },
+  "components": {
+    "primary_button": "tomato fill, chocolate border optional, white label",
+    "secondary_button": "butter or mint fill, chocolate label",
+    "cards": "card fill, warm border, soft shadow only for main cards",
+    "chips": "rounded pill, low saturation fills, warm border",
+    "tabbar": "card white, warm border, very soft shadow, active uses cream/butter capsule background"
+  },
+  "illustration_rules": [
+    "fat rounded shapes",
+    "flat pastel fills",
+    "chocolate outlines",
+    "transparent PNG icons",
+    "low-density food doodles",
+    "avoid photorealistic textures"
+  ],
+  "avoid": [
+    "directly copying Animal Crossing/Nintendo characters or logos",
+    "realistic garlic/wood textures",
+    "glassmorphism/high gloss",
+    "crowded stickers",
+    "neon colors",
+    "heavy shadows"
+  ]
+}

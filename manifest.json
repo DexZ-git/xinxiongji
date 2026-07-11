@@ -1,0 +1,13 @@
+{
+  "name": "新熊记",
+  "short_name": "新熊记",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFF7EA",
+  "theme_color": "#FFF7EA",
+  "icons": [
+    { "src": "assets/icons/APP_icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/APP_icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

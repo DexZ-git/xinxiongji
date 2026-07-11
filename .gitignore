@@ -1,0 +1,16 @@
+# 依赖 / 工具
+node_modules/
+.wrangler/
+
+# Cloudflare 本地密钥（务必不要提交）
+.dev.vars
+tools/cloud_config.json
+tools/accounts.json
+
+# 数据备份 / 临时
+*.bak
+data/recipes.json.bak
+
+# 系统
+.DS_Store
+Thumbs.db
