@@ -161,17 +161,37 @@ function idb() {
 async function idbPut(k, blob) { const db = await idb(); return new Promise((res, rej) => { const t = db.transaction('images', 'readwrite'); t.objectStore('images').put(blob, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); }
 async function idbGet(k) { const db = await idb(); return new Promise((res, rej) => { const t = db.transaction('images', 'readonly'); const r = t.objectStore('images').get(k); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 
-// data-img 可以是 IndexedDB key（用户上传）或内置图片路径（assets/dishes/...）
-async function hydrateImages(root) {
-  const els = root.querySelectorAll('[data-img]');
-  for (const el of els) {
-    const k = el.getAttribute('data-img');
-    if (!k) continue;
-    if (/[\/.]/.test(k) && (k.startsWith('assets/') || k.includes('.'))) {
-      el.style.backgroundImage = `url("${k}")`; el.classList.add('has-img'); continue;
-    }
-    try { const b = await idbGet(k); if (b) { el.style.backgroundImage = `url(${URL.createObjectURL(b)})`; el.classList.add('has-img'); } } catch (e) {}
+// data-img 可以是 IndexedDB key（用户上传）或内置图片路径（assets/dishes/...）。
+// 内置图策略（对弱网/大陆访问 pages.dev 关键）：下载成功一次 → 存 IndexedDB 永久复用，
+// 以后不再走网络；失败自动重试 3 次。每张图每台设备只需成功一次。
+const IMG_URLS = {}; // key -> objectURL（本次会话复用，避免重复建 URL）
+async function imgUrlFor(k) {
+  if (IMG_URLS[k]) return IMG_URLS[k];
+  const isAsset = k.indexOf('assets/') === 0;
+  const idbKey = isAsset ? 'asset:' + k : k;
+  try { const b = await idbGet(idbKey); if (b) return (IMG_URLS[k] = URL.createObjectURL(b)); } catch (e) {}
+  if (!isAsset) return null; // 用户上传图只存在 IDB，取不到就显示占位
+  for (let i = 0; i < 3; i++) {
+    try {
+      const res = await fetch(k, { cache: 'force-cache' });
+      if (res && res.ok) {
+        const blob = await res.blob();
+        try { await idbPut(idbKey, blob); } catch (e) {}
+        return (IMG_URLS[k] = URL.createObjectURL(blob));
+      }
+    } catch (e) {}
+    await new Promise(r => setTimeout(r, 600 * (i + 1)));
   }
+  return null;
+}
+async function hydrateImages(root) {
+  const els = [...root.querySelectorAll('[data-img]')];
+  await Promise.all(els.map(async el => {
+    const k = el.getAttribute('data-img');
+    if (!k) return;
+    const url = await imgUrlFor(k);
+    if (url && el.isConnected) { el.style.backgroundImage = `url("${url}")`; el.classList.add('has-img'); }
+  }));
 }
 
 /* ---------------- lookups ---------------- */
