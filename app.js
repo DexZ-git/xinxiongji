@@ -71,6 +71,22 @@ async function cloudSync() {
   else { SYNC.status = 'ok'; updateSyncUI(); }
 }
 
+/* ---------------- 主题（明亮/夜晚/跟随系统；设备偏好，存本机不入同步） ---------------- */
+const THEME_KEY = 'xiongji_theme';
+function themePref() { try { return localStorage.getItem(THEME_KEY) || 'auto'; } catch (e) { return 'auto'; } }
+function setThemePref(t) { try { localStorage.setItem(THEME_KEY, t); } catch (e) {} applyTheme(); }
+function applyTheme() {
+  const t = themePref();
+  if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', t);
+  const dark = t === 'dark' || (t === 'auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  const m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute('content', dark ? '#241a13' : '#FFF7EA');
+}
+if (window.matchMedia) {
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (themePref() === 'auto') applyTheme(); }); } catch (e) {}
+}
+
 /* ---------------- 访问门禁（口令 = SYNC_TOKEN，服务端校验，前端不存明文） ---------------- */
 const UNLOCK_KEY = 'xiongji_unlocked';
 function unlocked() { try { return localStorage.getItem(UNLOCK_KEY) === '1'; } catch (e) { return false; } }
@@ -91,6 +107,7 @@ function renderGate(msg) {
 }
 
 async function boot() {
+  applyTheme();
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
 
@@ -382,8 +399,14 @@ function menuMemory(m) {
 /* ---------- 更多 ---------- */
 function viewMore() {
   return `<div class="hd"><h1>更多</h1></div>
-    <button class="btn primary block" data-action="new-recipe" style="margin-bottom:14px">➕ 添加菜谱</button>
-    <div class="hint" id="sync-status" style="margin:0 0 4px">☁️ ${esc(syncStatusText())}</div>
+    <button class="btn primary block" data-action="new-recipe" style="margin-bottom:16px">➕ 添加菜谱</button>
+    <div class="sec-title" style="margin-top:0">显示</div>
+    <div class="chips-row" style="position:static;padding-bottom:2px">
+      <button class="fchip ${themePref() === 'light' ? 'on' : ''}" data-action="set-theme" data-theme="light">☀️ 明亮</button>
+      <button class="fchip ${themePref() === 'dark' ? 'on' : ''}" data-action="set-theme" data-theme="dark">🌙 夜晚</button>
+      <button class="fchip ${themePref() === 'auto' ? 'on' : ''}" data-action="set-theme" data-theme="auto">🔁 跟随系统</button>
+    </div>
+    <div class="hint" id="sync-status" style="margin:14px 0 4px">☁️ ${esc(syncStatusText())}</div>
     <details class="fold">
       <summary>同步设置</summary>
       <input id="sync-token-input" class="sync-input" type="text" autocomplete="off" placeholder="同步口令" value="${esc(syncToken())}">
@@ -394,7 +417,7 @@ function viewMore() {
       </div>
       <button class="btn block" data-action="lock-device" style="margin-bottom:12px">🔒 锁定本机</button>
     </details>
-    <div class="hint" style="margin-top:16px">新熊记 v0.6 · 菜单与自建菜谱自动同步，图片留本机。</div>`;
+    <div class="hint" style="margin-top:16px">新熊记 v0.7 · 菜单与自建菜谱自动同步，图片留本机。</div>`;
 }
 
 /* ---------- 添加菜谱（本地解析：材料提炼 + 步骤排版） ---------- */
@@ -584,6 +607,7 @@ function onClick(e) {
     case 'cloud-pull-now': (async () => { const c = await cloudPull(); if (c && Array.isArray(c.menus)) { DB.menus = c.menus; if (Array.isArray(c.userRecipes)) { DB.userRecipes = c.userRecipes; rebuildRecipes(); } DB.updatedAt = c.updatedAt || Date.now(); save(); SYNC.status = 'pulled'; render(); } else { alert('拉取失败或云端为空（先确认已连接、已部署）'); } })(); break;
     case 'cloud-push-now': cloudPush(); break;
     case 'lock-device': if (confirm('锁定本机？会清除口令，下次打开需重新输入。')) { setUnlocked(false); setSyncToken(''); location.reload(); } break;
+    case 'set-theme': setThemePref(btn.dataset.theme); render(); break;
     // 门禁
     case 'gate-enter': (async () => {
       const key = (document.getElementById('gate-input').value || '').trim();

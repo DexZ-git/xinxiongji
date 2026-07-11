@@ -14,9 +14,11 @@
   --mint: #BEEFD8;
   --sky: #B7EEF0;
   --leaf: #8EC66A;
-  --ink: #4C2A22;        /* 巧克力：主文字 / 描边 */
+  --ink: #4C2A22;        /* 巧克力：主文字 */
   --ink-soft: #8A7A70;   /* 暖灰：次级文字 */
-  --line: #E9C9A6;       /* 浅米棕描边 */
+  --outline: #6B4A38;    /* 巧克力细描边：按钮/胶囊/输入框/步骤条（参考稿的灵魂） */
+  --press: rgba(76, 42, 34, .28); /* 按钮底部“贴纸”硬阴影 */
+  --line: #E9C9A6;       /* 浅米棕描边：大卡片 */
   --line-soft: #F0DFC4;
   --shadow: 0 6px 20px rgba(76, 42, 34, .10);
   --shadow-sm: 0 2px 8px rgba(76, 42, 34, .06);
@@ -27,32 +29,35 @@
   --r-card: 24px;
   --r-lg: 28px;
 }
+/* 深色主题变量（两处引用同一套值：手动夜晚 / 跟随系统时的系统深色） */
+:root[data-theme="dark"] {
+  --cream: #241a13; --warm-blob: #2e2318; --card: #2b2018;
+  --butter: #ffcf5c; --butter-soft: #4a3a1c;
+  --tomato: #ff8b76; --tomato-ink: #ffb0a0;
+  --blush: #6b4038; --mint: #2f4a3d; --sky: #2c4548; --leaf: #6ea34e;
+  --ink: #f6ecdd; --ink-soft: #b8a892;
+  --outline: #8a6b52; --press: rgba(0, 0, 0, .45);
+  --line: #4a3a28; --line-soft: #3a2e20;
+  --shadow: 0 6px 20px rgba(0, 0, 0, .35); --shadow-sm: 0 2px 8px rgba(0, 0, 0, .25);
+}
 @media (prefers-color-scheme: dark) {
-  :root {
-    --cream: #241a13;
-    --warm-blob: #2e2318;
-    --card: #2b2018;
-    --butter: #ffcf5c;
-    --butter-soft: #4a3a1c;
-    --tomato: #ff8b76;
-    --tomato-ink: #ffb0a0;
-    --blush: #6b4038;
-    --mint: #2f4a3d;
-    --sky: #2c4548;
-    --leaf: #6ea34e;
-    --ink: #f6ecdd;
-    --ink-soft: #b8a892;
-    --line: #4a3a28;
-    --line-soft: #3a2e20;
-    --shadow: 0 6px 20px rgba(0, 0, 0, .35);
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, .25);
+  :root:not([data-theme="light"]) {
+    --cream: #241a13; --warm-blob: #2e2318; --card: #2b2018;
+    --butter: #ffcf5c; --butter-soft: #4a3a1c;
+    --tomato: #ff8b76; --tomato-ink: #ffb0a0;
+    --blush: #6b4038; --mint: #2f4a3d; --sky: #2c4548; --leaf: #6ea34e;
+    --ink: #f6ecdd; --ink-soft: #b8a892;
+    --outline: #8a6b52; --press: rgba(0, 0, 0, .45);
+    --line: #4a3a28; --line-soft: #3a2e20;
+    --shadow: 0 6px 20px rgba(0, 0, 0, .35); --shadow-sm: 0 2px 8px rgba(0, 0, 0, .25);
   }
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; padding: 0; }
+html { background: var(--cream); }
 body {
-  background: var(--cream);
+  background: transparent;
   color: var(--ink);
   font-family: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
     "PingFang SC", "MiSans", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
@@ -61,6 +66,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* 奶油大圆斑点缀（参考稿的柔和 blob，衬在内容之下） */
+body::before, body::after {
+  content: ''; position: fixed; border-radius: 50%; background: var(--warm-blob); z-index: -1; pointer-events: none;
+}
+body::before { width: 440px; height: 440px; top: -170px; right: -150px; }
+body::after { width: 380px; height: 380px; bottom: -150px; left: -160px; }
 
 #app {
   padding: calc(var(--safe-top) + 10px) 20px calc(var(--tabbar-h) + var(--safe-bot) + 30px);
@@ -73,10 +85,11 @@ body {
 .hd h1 { font-size: 28px; font-weight: 800; margin: 0; letter-spacing: 1px; }
 .hd .sub { color: var(--ink-soft); font-size: 13px; }
 .back {
-  display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--line);
-  color: var(--ink); font-size: 14px; font-weight: 600; padding: 7px 14px; border-radius: 999px;
-  cursor: pointer; margin-bottom: 6px; box-shadow: var(--shadow-sm);
+  display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1.5px solid var(--outline);
+  color: var(--ink); font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 999px;
+  cursor: pointer; margin-bottom: 6px; box-shadow: 0 2px 0 var(--press); transition: transform .06s;
 }
+.back:active { transform: translateY(2px); box-shadow: none; }
 .rowbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
 /* ---------- category section ---------- */
@@ -85,7 +98,7 @@ body {
 
 /* ---------- recipe card ---------- */
 .card {
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card);
+  background: var(--card); border: 1.5px solid var(--line); border-radius: var(--r-card);
   overflow: hidden; cursor: pointer; transition: transform .12s ease; box-shadow: var(--shadow-sm);
 }
 .card:active { transform: scale(.97); }
@@ -98,29 +111,33 @@ body {
 
 /* ---------- pills / chips ---------- */
 .chip {
-  display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px; margin: 0 7px 7px 0;
-  background: var(--warm-blob); border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: var(--ink);
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; margin: 0 7px 8px 0;
+  background: var(--card); border: 1.2px solid var(--outline); border-radius: 999px; font-size: 13px; color: var(--ink); font-weight: 600;
 }
 .chip .form { color: var(--tomato-ink); font-weight: 700; }
 
-/* ---------- buttons ---------- */
+/* ---------- buttons：贴纸感 = 巧克力描边 + 底部硬阴影 + 按下位移 ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  border: 1px solid var(--line); border-radius: 999px; font-size: 16px; font-weight: 600; padding: 12px 20px;
+  border: 1.5px solid var(--outline); border-radius: 999px; font-size: 16px; font-weight: 700; padding: 11px 20px;
   cursor: pointer; background: var(--card); color: var(--ink);
+  box-shadow: 0 2.5px 0 var(--press); transition: transform .06s, box-shadow .06s;
 }
-.btn.primary { background: var(--tomato); color: #fff; border: none; box-shadow: 0 4px 14px rgba(255, 128, 107, .38); text-shadow: 0 1px 0 rgba(76, 42, 34, .18); }
-.btn.secondary { background: var(--butter); color: var(--on-butter); border: none; }
+.btn:active { transform: translateY(2px); box-shadow: 0 .5px 0 var(--press); }
+.btn.primary { background: var(--tomato); color: #fff; text-shadow: 0 1px 0 rgba(76, 42, 34, .22); }
+.btn.secondary { background: var(--butter); color: var(--on-butter); }
 .btn.block { width: 100%; }
-.btn.sm { padding: 8px 15px; font-size: 14px; }
+.btn.sm { padding: 7px 15px; font-size: 14px; }
 .btn.ghost { background: none; border: none; box-shadow: none; }
+.btn.ghost:active { transform: none; }
 .btn.danger { color: var(--tomato-ink); }
 .add-btn {
-  border: 1px solid var(--line); background: var(--butter); color: var(--on-butter); font-weight: 800; font-size: 18px;
-  width: 36px; height: 36px; border-radius: 50%; cursor: pointer; line-height: 1; transition: transform .1s;
+  border: 1.5px solid var(--outline); background: var(--butter); color: var(--on-butter); font-weight: 800; font-size: 18px;
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer; line-height: 1;
+  box-shadow: 0 2px 0 var(--press); transition: transform .06s;
 }
-.add-btn:active { transform: scale(.9); }
-.add-btn.on { background: var(--leaf); color: #fff; border-color: transparent; }
+.add-btn:active { transform: translateY(2px); box-shadow: none; }
+.add-btn.on { background: var(--leaf); color: #fff; }
 
 /* ---------- detail ---------- */
 .hero {
@@ -135,11 +152,20 @@ body {
   border: none; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 600; cursor: pointer;
 }
 .sec-title { font-size: 13px; font-weight: 700; color: var(--ink-soft); letter-spacing: .5px; margin: 22px 0 9px; }
-.steps-group { margin-bottom: 16px; }
+.steps-group { margin-bottom: 18px; }
 .steps-group h4 { margin: 0 0 8px; font-size: 16px; color: var(--ink); font-weight: 700; }
-.steps-group ol { margin: 0; padding-left: 22px; }
-.steps-group ol li { margin-bottom: 6px; padding-left: 2px; }
-.steps-group ol li::marker { color: var(--tomato-ink); font-weight: 700; }
+/* 步骤 = 白色圆角胶囊行 + 番茄数字圆徽（参考稿核心组件） */
+.steps-group ol { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.steps-group ol li {
+  counter-increment: step; position: relative; margin-bottom: 8px;
+  background: var(--card); border: 1.2px solid var(--outline); border-radius: 16px;
+  padding: 10px 14px 10px 44px; line-height: 1.45;
+}
+.steps-group ol li::before {
+  content: counter(step); position: absolute; left: 11px; top: 10px;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--tomato); color: #fff;
+  font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+}
 
 /* ---------- segmented ---------- */
 .seg { display: flex; background: var(--warm-blob); border: 1px solid var(--line); border-radius: 16px; padding: 4px; margin: 6px 0 16px; }
@@ -163,7 +189,7 @@ details.fold summary::after { content: " ▾"; }
 details.fold[open] summary::after { content: " ▴"; }
 
 /* ---------- cook: accordion ---------- */
-.acc { border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; margin-bottom: 12px; background: var(--card); box-shadow: var(--shadow-sm); }
+.acc { border: 1.5px solid var(--outline); border-radius: var(--r-card); overflow: hidden; margin-bottom: 12px; background: var(--card); box-shadow: 0 2.5px 0 var(--press); }
 .acc > .head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; font-weight: 700; }
 .acc > .head .em { font-size: 22px; }
 .acc > .head .dish-thumb { width: 40px; height: 40px; border-radius: 12px; flex: none;
@@ -182,8 +208,8 @@ details.fold[open] summary::after { content: " ▴"; }
 
 /* ---------- cook: horizontal tabs ---------- */
 .htabs { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; -webkit-overflow-scrolling: touch; }
-.htabs button { flex: none; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-weight: 600; font-size: 14px; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
-.htabs button.on { background: var(--butter); color: var(--on-butter); border-color: transparent; }
+.htabs button { flex: none; padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--outline); background: var(--card); font-weight: 700; font-size: 14px; color: var(--ink); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0 var(--press); }
+.htabs button.on { background: var(--butter); color: var(--on-butter); }
 
 /* ---------- cook: checklist ---------- */
 .ck-line { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; }
@@ -201,7 +227,7 @@ details.fold[open] summary::after { content: " ▴"; }
 .cartbar .btn { margin-left: auto; }
 
 /* ---------- menu list card ---------- */
-.menu-card { display: flex; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line);
+.menu-card { display: flex; gap: 14px; align-items: center; background: var(--card); border: 1.5px solid var(--line);
   border-radius: var(--r-card); padding: 12px; margin-bottom: 14px; cursor: pointer; box-shadow: var(--shadow-sm); }
 .menu-card .cov { width: 74px; height: 74px; border-radius: 16px; background: var(--warm-blob) center/cover no-repeat;
   display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
@@ -216,7 +242,7 @@ details.fold[open] summary::after { content: " ▴"; }
 .tabbar {
   position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--safe-bot) + 10px);
   width: calc(100% - 24px); max-width: 460px; height: var(--tabbar-h);
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: var(--card); border: 1.5px solid var(--line); border-radius: var(--r-lg);
   display: flex; z-index: 50; box-shadow: var(--shadow); overflow: hidden;
 }
 .tab { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center;
@@ -245,9 +271,11 @@ details.fold[open] summary::after { content: " ▴"; }
   position: sticky; top: 0; z-index: 20; background: var(--cream); scrollbar-width: none;
 }
 .chips-row::-webkit-scrollbar { display: none; }
-.fchip { flex: none; padding: 7px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-  font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
-.fchip.on { background: var(--butter); color: var(--on-butter); border-color: transparent; }
+.fchip { flex: none; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--outline); background: var(--card);
+  font-size: 14px; font-weight: 700; color: var(--ink); cursor: pointer; white-space: nowrap;
+  box-shadow: 0 2px 0 var(--press); transition: transform .06s; }
+.fchip:active { transform: translateY(2px); box-shadow: none; }
+.fchip.on { background: var(--butter); color: var(--on-butter); }
 
 /* ---------- image-select state ---------- */
 .card { position: relative; }
@@ -281,9 +309,9 @@ details.fold[open] summary::after { content: " ▴"; }
 /* ---------- menu operation cards ---------- */
 .op-cards { display: flex; flex-direction: column; gap: 12px; }
 .op-card { display: flex; align-items: center; gap: 14px; text-align: left; width: 100%;
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); padding: 16px;
-  cursor: pointer; box-shadow: var(--shadow-sm); }
-.op-card:active { transform: scale(.99); }
+  background: var(--card); border: 1.5px solid var(--outline); border-radius: var(--r-card); padding: 16px;
+  cursor: pointer; box-shadow: 0 3px 0 var(--press); transition: transform .06s; }
+.op-card:active { transform: translateY(2px); box-shadow: 0 .5px 0 var(--press); }
 .op-card .oe { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex: none; }
 .op-card.prep .oe { background: var(--mint); }
 .op-card.cook .oe { background: var(--blush); }
@@ -297,13 +325,13 @@ details.fold[open] summary::after { content: " ▴"; }
 .mem-name { font-weight: 800; font-size: 20px; }
 
 /* ---------- sync input ---------- */
-.sync-input { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px;
+.sync-input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--outline); border-radius: 999px;
   background: var(--card); color: var(--ink); font-size: 15px; margin-bottom: 10px; }
 .sync-input:focus { outline: none; border-color: var(--tomato); }
 
 /* ---------- 添加菜谱编辑器 ---------- */
 .form-label { font-size: 13px; font-weight: 700; color: var(--ink-soft); letter-spacing: .5px; margin: 16px 0 7px; }
-textarea.raw { width: 100%; min-height: 170px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 16px;
+textarea.raw { width: 100%; min-height: 170px; padding: 12px 14px; border: 1.5px solid var(--outline); border-radius: 16px;
   background: var(--card); color: var(--ink); font-size: 15px; line-height: 1.55; font-family: inherit; resize: vertical; }
 textarea.raw:focus { outline: none; border-color: var(--tomato); }
 .photo-pick { height: 130px; border-radius: 16px; border: 1.5px dashed var(--line); cursor: pointer;
