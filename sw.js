@@ -1,5 +1,5 @@
 // 新熊记 service worker —— 缓存外壳，断网可开
-const CACHE = 'xiongji-v5';
+const CACHE = 'xiongji-v6';
 const ASSETS = [
   './',
   './index.html',

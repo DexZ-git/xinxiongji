@@ -299,3 +299,14 @@ details.fold[open] summary::after { content: " ▴"; }
 .sync-input { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px;
   background: var(--card); color: var(--ink); font-size: 15px; margin-bottom: 10px; }
 .sync-input:focus { outline: none; border-color: var(--tomato); }
+
+/* ---------- 访问门禁 ---------- */
+body.gated .tabbar { display: none; }
+.gate { min-height: 78vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.gate-card { width: 100%; max-width: 340px; text-align: center; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 30px 22px; box-shadow: var(--shadow); }
+.gate-emoji { font-size: 40px; }
+.gate-title { font-size: 24px; font-weight: 800; margin-top: 8px; }
+.gate-sub { color: var(--ink-soft); font-size: 14px; margin: 4px 0 18px; }
+.gate .sync-input { text-align: center; }
+.gate-msg { color: var(--tomato-ink); font-size: 13px; min-height: 18px; margin-top: 10px; }

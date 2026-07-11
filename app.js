@@ -68,6 +68,25 @@ async function cloudSync() {
   else { SYNC.status = 'ok'; updateSyncUI(); }
 }
 
+/* ---------------- 访问门禁（口令 = SYNC_TOKEN，服务端校验，前端不存明文） ---------------- */
+const UNLOCK_KEY = 'xiongji_unlocked';
+function unlocked() { try { return localStorage.getItem(UNLOCK_KEY) === '1'; } catch (e) { return false; } }
+function setUnlocked(v) { try { v ? localStorage.setItem(UNLOCK_KEY, '1') : localStorage.removeItem(UNLOCK_KEY); } catch (e) {} }
+async function probeStatus() { try { const r = await fetch(SYNC.endpoint, { cache: 'no-store' }); return r.status; } catch (e) { return 0; } }
+function renderGate(msg) {
+  document.body.classList.add('gated');
+  document.getElementById('app').innerHTML = `<div class="gate"><div class="gate-card">
+    <div class="gate-emoji">🐻‍❄️🔒</div>
+    <div class="gate-title">新熊记</div>
+    <div class="gate-sub">输入口令进入</div>
+    <input id="gate-input" class="sync-input" type="password" autocomplete="off" placeholder="访问口令">
+    <button class="btn primary block" data-action="gate-enter">进入</button>
+    <div class="gate-msg" id="gate-msg">${msg ? esc(msg) : ''}</div>
+  </div></div>`;
+  const inp = document.getElementById('gate-input');
+  if (inp) { inp.focus(); inp.addEventListener('keydown', e => { if (e.key === 'Enter') document.querySelector('[data-action="gate-enter"]').click(); }); }
+}
+
 async function boot() {
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
@@ -92,9 +111,12 @@ async function boot() {
 
   document.body.addEventListener('click', onClick);
   document.getElementById('filepick').addEventListener('change', onFile);
-  render();
   registerSW();
-  cloudSync();   // 打开时按时间戳对账（无口令则跳过）
+
+  if (unlocked()) { render(); cloudSync(); return; }   // 本机已解锁 → 直接进（支持离线）
+  const st = await probeStatus();                       // 探后端：401=已设口令需验证；其余=本地/未配置/无需口令
+  if (st === 401) renderGate();
+  else { setUnlocked(true); render(); cloudSync(); }
 }
 
 function registerSW() {
@@ -138,6 +160,7 @@ function defaultMenuName() { const d = new Date(); return (d.getMonth() + 1) + '
 
 /* ---------------- render ---------------- */
 function render() {
+  document.body.classList.remove('gated');
   const app = document.getElementById('app');
   let html = '';
   switch (state.screen) {
@@ -352,19 +375,20 @@ function menuMemory(m) {
 /* ---------- 更多 ---------- */
 function viewMore() {
   return `<div class="hd"><h1>更多</h1></div>
-    <div class="sec-title">云同步（自动）</div>
+    <div class="sec-title">云同步 / 口令</div>
     <div class="hint" id="sync-status">${esc(syncStatusText())}</div>
-    <input id="sync-token-input" class="sync-input" type="text" autocomplete="off" placeholder="粘贴同步口令（Cloudflare 里设的 SYNC_TOKEN）" value="${esc(syncToken())}">
+    <input id="sync-token-input" class="sync-input" type="text" autocomplete="off" placeholder="同步口令（Cloudflare 里设的 SYNC_TOKEN）" value="${esc(syncToken())}">
     <button class="btn block secondary" data-action="save-token" style="margin-bottom:10px">🔗 连接 / 保存口令</button>
-    <div class="rowbar" style="gap:10px;margin-bottom:16px">
+    <div class="rowbar" style="gap:10px;margin-bottom:10px">
       <button class="btn" style="flex:1" data-action="cloud-pull-now">⬇️ 从云拉取</button>
       <button class="btn" style="flex:1" data-action="cloud-push-now">⬆️ 上传到云</button>
     </div>
-    <div class="sec-title">本地备份文件</div>
+    <button class="btn block" data-action="lock-device" style="margin-bottom:14px">🔒 锁定本机（清除口令，下次需重新输入）</button>
+    <div class="hint">同步口令 = 进入 app 的口令（Cloudflare 里的 <b>SYNC_TOKEN</b>）。输对才进得来，同时开启同步。云同步只传「菜单」文本；成品图/合照留本机、不上云。改动自动上传、打开自动按时间戳拉取。</div>
+    <div class="sec-title">本地备份文件（兜底，不依赖云）</div>
     <button class="btn block" data-action="export" style="margin-bottom:10px">⬇️ 导出菜单备份（.json）</button>
     <button class="btn block" data-action="import" style="margin-bottom:10px">⬆️ 导入菜单备份</button>
-    <div class="hint">云同步只传「菜单」文本（选了哪些菜、勾选、命名）；成品图/合照留本机、不上云。改动自动上传、打开自动按时间戳拉取（云更新才覆盖本地）。</div>
-    <div class="hint">新熊记 · 本地优先 + 可选云备份。v0.4</div>`;
+    <div class="hint">新熊记 · 本地优先 + 可选云备份 + 口令门禁。v0.5</div>`;
 }
 
 /* ---------------- events ---------------- */
@@ -409,6 +433,19 @@ function onClick(e) {
     case 'save-token': { const v = document.getElementById('sync-token-input').value.trim(); setSyncToken(v); cloudSync(); render(); break; }
     case 'cloud-pull-now': (async () => { const c = await cloudPull(); if (c && Array.isArray(c.menus)) { DB.menus = c.menus; DB.updatedAt = c.updatedAt || Date.now(); save(); SYNC.status = 'pulled'; render(); } else { alert('拉取失败或云端为空（先确认已连接、已部署）'); } })(); break;
     case 'cloud-push-now': cloudPush(); break;
+    case 'lock-device': if (confirm('锁定本机？会清除口令，下次打开需重新输入。')) { setUnlocked(false); setSyncToken(''); location.reload(); } break;
+    // 门禁
+    case 'gate-enter': (async () => {
+      const key = (document.getElementById('gate-input').value || '').trim();
+      if (!key) { renderGate('请输入口令'); return; }
+      const m = document.getElementById('gate-msg'); if (m) m.textContent = '验证中…';
+      try {
+        const r = await fetch(SYNC.endpoint, { headers: { 'x-sync-token': key }, cache: 'no-store' });
+        if (r.status === 200) { setSyncToken(key); setUnlocked(true); render(); cloudSync(); }
+        else if (r.status === 401) renderGate('口令不对，再试一次');
+        else renderGate('后端异常（' + r.status + '），稍后再试');
+      } catch (e) { renderGate('网络不通，检查连接'); }
+    })(); break;
   }
 }
 
