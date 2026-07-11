@@ -20,10 +20,11 @@
   --line-soft: #F0DFC4;
   --shadow: 0 6px 20px rgba(76, 42, 34, .10);
   --shadow-sm: 0 2px 8px rgba(76, 42, 34, .06);
+  --on-butter: #4C2A22;  /* 蛋黄/黄油底上的文字永远用巧克力色（深色模式也不变，保证可读） */
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bot: env(safe-area-inset-bottom, 0px);
   --tabbar-h: 66px;
-  --r-card: 22px;
+  --r-card: 24px;
   --r-lg: 28px;
 }
 @media (prefers-color-scheme: dark) {
@@ -69,7 +70,7 @@ body {
 
 /* ---------- header ---------- */
 .hd { display: flex; align-items: baseline; gap: 10px; padding: 6px 2px 12px; }
-.hd h1 { font-size: 28px; font-weight: 700; margin: 0; letter-spacing: .5px; }
+.hd h1 { font-size: 28px; font-weight: 800; margin: 0; letter-spacing: 1px; }
 .hd .sub { color: var(--ink-soft); font-size: 13px; }
 .back {
   display: inline-flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--line);
@@ -108,14 +109,14 @@ body {
   border: 1px solid var(--line); border-radius: 999px; font-size: 16px; font-weight: 600; padding: 12px 20px;
   cursor: pointer; background: var(--card); color: var(--ink);
 }
-.btn.primary { background: var(--tomato); color: #fff; border: none; box-shadow: 0 4px 14px rgba(255, 128, 107, .38); }
-.btn.secondary { background: var(--butter); color: var(--ink); border: none; }
+.btn.primary { background: var(--tomato); color: #fff; border: none; box-shadow: 0 4px 14px rgba(255, 128, 107, .38); text-shadow: 0 1px 0 rgba(76, 42, 34, .18); }
+.btn.secondary { background: var(--butter); color: var(--on-butter); border: none; }
 .btn.block { width: 100%; }
 .btn.sm { padding: 8px 15px; font-size: 14px; }
 .btn.ghost { background: none; border: none; box-shadow: none; }
 .btn.danger { color: var(--tomato-ink); }
 .add-btn {
-  border: 1px solid var(--line); background: var(--butter); color: var(--ink); font-weight: 800; font-size: 18px;
+  border: 1px solid var(--line); background: var(--butter); color: var(--on-butter); font-weight: 800; font-size: 18px;
   width: 36px; height: 36px; border-radius: 50%; cursor: pointer; line-height: 1; transition: transform .1s;
 }
 .add-btn:active { transform: scale(.9); }
@@ -182,7 +183,7 @@ details.fold[open] summary::after { content: " ▴"; }
 /* ---------- cook: horizontal tabs ---------- */
 .htabs { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; -webkit-overflow-scrolling: touch; }
 .htabs button { flex: none; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-weight: 600; font-size: 14px; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
-.htabs button.on { background: var(--butter); color: var(--ink); border-color: transparent; }
+.htabs button.on { background: var(--butter); color: var(--on-butter); border-color: transparent; }
 
 /* ---------- cook: checklist ---------- */
 .ck-line { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; }
@@ -233,7 +234,7 @@ details.fold[open] summary::after { content: " ▴"; }
 
 /* ---------- header row ---------- */
 .hd-row { padding: 6px 2px 10px; }
-.hd-row h1 { font-size: 28px; font-weight: 700; margin: 0; }
+.hd-row h1 { font-size: 28px; font-weight: 800; margin: 0; letter-spacing: 1px; }
 .msub { color: var(--ink-soft); font-size: 13px; }
 .op-h1 { font-size: 24px; font-weight: 800; margin: 4px 0 14px; }
 .chev { margin-left: auto; color: var(--ink-soft); font-size: 22px; align-self: center; }
@@ -246,7 +247,7 @@ details.fold[open] summary::after { content: " ▴"; }
 .chips-row::-webkit-scrollbar { display: none; }
 .fchip { flex: none; padding: 7px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
   font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
-.fchip.on { background: var(--butter); color: var(--ink); border-color: transparent; }
+.fchip.on { background: var(--butter); color: var(--on-butter); border-color: transparent; }
 
 /* ---------- image-select state ---------- */
 .card { position: relative; }
@@ -299,6 +300,18 @@ details.fold[open] summary::after { content: " ▴"; }
 .sync-input { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px;
   background: var(--card); color: var(--ink); font-size: 15px; margin-bottom: 10px; }
 .sync-input:focus { outline: none; border-color: var(--tomato); }
+
+/* ---------- 添加菜谱编辑器 ---------- */
+.form-label { font-size: 13px; font-weight: 700; color: var(--ink-soft); letter-spacing: .5px; margin: 16px 0 7px; }
+textarea.raw { width: 100%; min-height: 170px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 16px;
+  background: var(--card); color: var(--ink); font-size: 15px; line-height: 1.55; font-family: inherit; resize: vertical; }
+textarea.raw:focus { outline: none; border-color: var(--tomato); }
+.photo-pick { height: 130px; border-radius: 16px; border: 1.5px dashed var(--line); cursor: pointer;
+  background: var(--warm-blob) center/cover no-repeat; display: flex; align-items: center; justify-content: center;
+  color: var(--ink-soft); font-size: 14px; font-weight: 600; }
+.photo-pick.has-img { border-style: solid; font-size: 0; }
+.chip .x { margin-left: 5px; padding: 0 3px; color: var(--ink-soft); font-weight: 700; cursor: pointer; }
+.chip .x:active { color: var(--tomato-ink); }
 
 /* ---------- 访问门禁 ---------- */
 body.gated .tabbar { display: none; }
