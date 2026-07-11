@@ -56,8 +56,18 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; padding: 0; }
 html { background: var(--cream); }
+/* 主题背景画在 body 上（iOS 切主题时 html 根背景不重绘，会露出旧色块；body 会正常重绘）。
+   奶油圆斑并进 body 的背景层，避免伪元素与不透明背景的层叠冲突。 */
 body {
-  background: transparent;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(closest-side, var(--warm-blob) 99%, transparent 100%),
+    radial-gradient(closest-side, var(--warm-blob) 99%, transparent 100%);
+  background-size: 440px 440px, 380px 380px;
+  background-position: calc(100% + 150px) -170px, -160px calc(100% + 150px);
+  background-repeat: no-repeat;
   color: var(--ink);
   font-family: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
     "PingFang SC", "MiSans", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
@@ -67,12 +77,7 @@ body {
 }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-/* 奶油大圆斑点缀（参考稿的柔和 blob，衬在内容之下） */
-body::before, body::after {
-  content: ''; position: fixed; border-radius: 50%; background: var(--warm-blob); z-index: -1; pointer-events: none;
-}
-body::before { width: 440px; height: 440px; top: -170px; right: -150px; }
-body::after { width: 380px; height: 380px; bottom: -150px; left: -160px; }
+/* （奶油圆斑已并入 body 背景层，见上方 body 规则） */
 
 #app {
   padding: calc(var(--safe-top) + 10px) 20px calc(var(--tabbar-h) + var(--safe-bot) + 30px);
@@ -267,7 +272,8 @@ details.fold[open] summary::after { content: " ▴"; }
 
 /* ---------- category filter chips ---------- */
 .chips-row {
-  display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; -webkit-overflow-scrolling: touch;
+  display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  margin: 0 -20px; padding: 4px 20px 12px;   /* 通到屏幕边缘滚动，末尾留 20px 余量，最后一个胶囊不被齐口切断 */
   position: sticky; top: 0; z-index: 20; background: var(--cream); scrollbar-width: none;
 }
 .chips-row::-webkit-scrollbar { display: none; }

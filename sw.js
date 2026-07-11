@@ -1,7 +1,7 @@
 // 新熊记 service worker
 // 策略：外壳/图片 = 缓存优先随后更新（快）；data/*.json = 网络优先（保证菜谱数据永远新，避免新旧版本打架）；/api/ 不缓存。
 // 安装时预缓存全部菜图（从 recipes.json 动态取，不用手工维护清单）。
-const CACHE = 'xiongji-v13';
+const CACHE = 'xiongji-v14';
 const ASSETS = [
   './',
   './index.html',
