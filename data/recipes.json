@@ -4,7 +4,7 @@
       "id": "jiang-cong-chao-xie",
       "name": "姜葱炒蟹",
       "category": "海鲜",
-      "photo": "assets/dishes/jiang-cong-chao-xie.png",
+      "photo": "assets/dishes/jiang-cong-chao-xie.jpg",
       "main": [
         { "ing": "crab", "note": "剁掉尖尖的位置、拍蟹腿、冲洗" }
       ],
@@ -39,7 +39,7 @@
       "id": "jia-shao-za-yu",
       "name": "家烧杂鱼（虾）",
       "category": "海鲜",
-      "photo": "assets/dishes/jia-shao-za-yu.png",
+      "photo": "assets/dishes/jia-shao-za-yu.jpg",
       "main": [
         { "ing": "seafish", "note": "海鱼抹一点盐给底味" },
         { "ing": "shrimp", "note": "看情况自己买" },
@@ -76,7 +76,7 @@
       "id": "quan-shui-niu-rou",
       "name": "泉水牛肉",
       "category": "肉禽",
-      "photo": "assets/dishes/quan-shui-niu-rou.png",
+      "photo": "assets/dishes/quan-shui-niu-rou.jpg",
       "main": [
         { "ing": "beef", "note": "煮到有点卷曲" },
         { "ing": "celery", "form": "碎", "note": "西芹碎" }
@@ -97,7 +97,7 @@
       "id": "lu-niu-jian-zi",
       "name": "卤牛腱子",
       "category": "肉禽",
-      "photo": "assets/dishes/lu-niu-jian-zi.png",
+      "photo": "assets/dishes/lu-niu-jian-zi.jpg",
       "main": [
         { "ing": "beef-shank", "note": "冷水泡出血水 3 小时，中间换一次水" }
       ],
@@ -123,7 +123,7 @@
       "id": "kao-ji-chi",
       "name": "烤鸡翅",
       "category": "肉禽",
-      "photo": "assets/dishes/kao-ji-chi.png",
+      "photo": "assets/dishes/kao-ji-chi.jpg",
       "main": [
         { "ing": "chicken-wing" }
       ],
@@ -146,7 +146,7 @@
       "id": "suan-rong-tong-cai",
       "name": "蒜蓉通菜",
       "category": "蔬菜",
-      "photo": "assets/dishes/suan-rong-tong-cai.png",
+      "photo": "assets/dishes/suan-rong-tong-cai.jpg",
       "main": [
         { "ing": "water-spinach", "note": "菜根、嫩叶分开，菜根拍拍、撕开" }
       ],
@@ -171,7 +171,7 @@
       "id": "pai-gu-shan-yao-tang",
       "name": "排骨山药汤",
       "category": "汤羹",
-      "photo": "assets/dishes/pai-gu-shan-yao-tang.png",
+      "photo": "assets/dishes/pai-gu-shan-yao-tang.jpg",
       "main": [
         { "ing": "pork-rib" },
         { "ing": "yam" },
@@ -197,7 +197,7 @@
       "id": "cong-jiang-cheng-zi",
       "name": "葱姜蛏子王",
       "category": "海鲜",
-      "photo": "assets/dishes/cong-jiang-cheng-zi.png",
+      "photo": "assets/dishes/cong-jiang-cheng-zi.jpg",
       "main": [
         { "ing": "razor-clam", "note": "约 650 克；烫 3 秒过冷河，肉壳分离摘黑膜" }
       ],
@@ -232,7 +232,7 @@
       "id": "bai-zhuo-cai-xin",
       "name": "白灼菜心",
       "category": "蔬菜",
-      "photo": "assets/dishes/bai-zhuo-cai-xin.png",
+      "photo": "assets/dishes/bai-zhuo-cai-xin.jpg",
       "main": [
         { "ing": "choy-sum" }
       ],
@@ -253,7 +253,7 @@
       "id": "qing-zheng-dai-yu",
       "name": "清蒸带鱼",
       "category": "海鲜",
-      "photo": "assets/dishes/qing-zheng-dai-yu.png",
+      "photo": "assets/dishes/qing-zheng-dai-yu.jpg",
       "main": [
         { "ing": "hairtail", "note": "切段洗净，单面切花刀" }
       ],
@@ -278,7 +278,7 @@
       "id": "cong-you-bao-yu",
       "name": "葱油鲍鱼",
       "category": "海鲜",
-      "photo": "assets/dishes/cong-you-bao-yu.png",
+      "photo": "assets/dishes/cong-you-bao-yu.jpg",
       "main": [
         { "ing": "abalone", "note": "洗净切花刀，连壳带肉煮 3 分钟左右" }
       ],
@@ -298,7 +298,7 @@
       "id": "lu-sun-chao-yang-du-jun",
       "name": "芦笋炒羊肚菌",
       "category": "蔬菜",
-      "photo": "assets/dishes/lu-sun-chao-yang-du-jun.png",
+      "photo": "assets/dishes/lu-sun-chao-yang-du-jun.jpg",
       "main": [
         { "ing": "asparagus", "form": "斜切小段", "note": "去皮，掐不动处摘掉" },
         { "ing": "morel", "note": "清水浸泡，对半切" }
@@ -323,7 +323,7 @@
       "id": "cong-shao-niu-rou",
       "name": "葱烧牛肉",
       "category": "肉禽",
-      "photo": "assets/dishes/cong-shao-niu-rou.png",
+      "photo": "assets/dishes/cong-shao-niu-rou.jpg",
       "main": [
         { "ing": "beef", "note": "腌制 20 分钟" }
       ],
@@ -350,7 +350,7 @@
       "id": "yu-wan-tang",
       "name": "鱼丸汤",
       "category": "汤羹",
-      "photo": "assets/dishes/yu-wan-tang.png",
+      "photo": "assets/dishes/yu-wan-tang.jpg",
       "main": [
         { "ing": "fish-ball" },
         { "ing": "celery", "form": "碎", "note": "大量芹菜" },
@@ -375,7 +375,7 @@
       "id": "jiu-cai-chao-ji-dan",
       "name": "韭菜炒鸡蛋",
       "category": "蔬菜",
-      "photo": "assets/dishes/jiu-cai-chao-ji-dan.png",
+      "photo": "assets/dishes/jiu-cai-chao-ji-dan.jpg",
       "main": [
         { "ing": "chives", "form": "4cm 段", "note": "约 20 根，去末端根 1cm，根叶分开" },
         { "ing": "egg", "note": "3 个，加生粉液、盐打匀" }
@@ -400,7 +400,7 @@
       "id": "yan-ju-hua-luo",
       "name": "盐焗花螺",
       "category": "海鲜",
-      "photo": "assets/dishes/yan-ju-hua-luo.png",
+      "photo": "assets/dishes/yan-ju-hua-luo.jpg",
       "main": [
         { "ing": "sea-snail", "note": "泡水加盐 3-4h，中间可换水" }
       ],
@@ -426,7 +426,7 @@
       "id": "liang-ban-bo-cai",
       "name": "凉拌菠菜",
       "category": "凉菜",
-      "photo": "assets/dishes/liang-ban-bo-cai.png",
+      "photo": "assets/dishes/liang-ban-bo-cai.jpg",
       "main": [
         { "ing": "spinach", "note": "500g 焯水 30s，过冷水攥干" }
       ],
@@ -448,7 +448,7 @@
       "id": "pai-gu-dun-xiang-gan",
       "name": "排骨炖香干",
       "category": "肉禽",
-      "photo": "assets/dishes/pai-gu-dun-xiang-gan.png",
+      "photo": "assets/dishes/pai-gu-dun-xiang-gan.jpg",
       "main": [
         { "ing": "pork-rib" },
         { "ing": "dried-tofu", "note": "香干" }
