@@ -1,5 +1,7 @@
-// 新熊记 service worker —— 缓存外壳，断网可开
-const CACHE = 'xiongji-v10';
+// 新熊记 service worker
+// 策略：外壳/图片 = 缓存优先随后更新（快）；data/*.json = 网络优先（保证菜谱数据永远新，避免新旧版本打架）；/api/ 不缓存。
+// 安装时预缓存全部菜图（从 recipes.json 动态取，不用手工维护清单）。
+const CACHE = 'xiongji-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -16,7 +18,17 @@ const ASSETS = [
 // 备用 tab 图标：tab_4_bear_scooter_512.png（采购）
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(() => {})));
+  e.waitUntil((async () => {
+    const c = await caches.open(CACHE);
+    await c.addAll(ASSETS).catch(() => {});
+    // 预缓存全部菜图（失败不阻塞安装）
+    try {
+      const res = await fetch('./data/recipes.json', { cache: 'no-cache' });
+      const data = await res.json();
+      const photos = (data.recipes || []).map(r => r.photo).filter(p => p && p.indexOf('assets/') === 0);
+      await Promise.all(photos.map(p => c.add('./' + p).catch(() => {})));
+    } catch (err) {}
+  })());
   self.skipWaiting();
 });
 
@@ -27,10 +39,23 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// stale-while-revalidate
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
-  if (new URL(e.request.url).pathname.startsWith('/api/')) return; // 同步接口永远走网络、不缓存
+  const path = new URL(e.request.url).pathname;
+  if (path.startsWith('/api/')) return; // 同步接口永远直连网络
+
+  // 数据 JSON：网络优先（在线必拿最新，离线才用缓存）
+  if (path.indexOf('/data/') >= 0 && path.endsWith('.json')) {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        if (res && res.ok) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); }
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // 其余（外壳/图片）：stale-while-revalidate
   e.respondWith(
     caches.match(e.request).then(cached => {
       const fetched = fetch(e.request).then(res => {

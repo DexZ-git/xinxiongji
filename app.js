@@ -112,8 +112,8 @@ async function boot() {
   try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
 
   const [ingRes, recRes] = await Promise.all([
-    fetch('./data/ingredients.json').then(r => r.json()),
-    fetch('./data/recipes.json').then(r => r.json()),
+    fetch('./data/ingredients.json', { cache: 'no-cache' }).then(r => r.json()),
+    fetch('./data/recipes.json', { cache: 'no-cache' }).then(r => r.json()),
   ]);
 
   const photoMap = {};
