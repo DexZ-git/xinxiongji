@@ -1,7 +1,7 @@
 // 新熊记 service worker
 // 策略：外壳/图片 = 缓存优先随后更新（快）；data/*.json = 网络优先（保证菜谱数据永远新，避免新旧版本打架）；/api/ 不缓存。
 // 安装时预缓存全部菜图（从 recipes.json 动态取，不用手工维护清单）。
-const CACHE = 'xiongji-v11';
+const CACHE = 'xiongji-v12';
 const ASSETS = [
   './',
   './index.html',
@@ -44,8 +44,10 @@ self.addEventListener('fetch', e => {
   const path = new URL(e.request.url).pathname;
   if (path.startsWith('/api/')) return; // 同步接口永远直连网络
 
-  // 数据 JSON：网络优先（在线必拿最新，离线才用缓存）
-  if (path.indexOf('/data/') >= 0 && path.endsWith('.json')) {
+  // 外壳 + 数据（HTML/JS/CSS/JSON）：网络优先——在线必是最新版，离线回退缓存。
+  // 只有图片走缓存优先。这样每次发版用户重开一次即生效，不再出现新旧文件错位。
+  const isImage = path.indexOf('/assets/') >= 0;
+  if (!isImage) {
     e.respondWith(
       fetch(e.request).then(res => {
         if (res && res.ok) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); }
@@ -55,7 +57,7 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // 其余（外壳/图片）：stale-while-revalidate
+  // 图片：stale-while-revalidate（预缓存 + 秒开）
   e.respondWith(
     caches.match(e.request).then(cached => {
       const fetched = fetch(e.request).then(res => {

@@ -116,8 +116,10 @@ async function boot() {
     fetch('./data/recipes.json', { cache: 'no-cache' }).then(r => r.json()),
   ]);
 
+  // 只保留“用户手动上传”的图（IndexedDB key）；内置 assets/ 路径永远以最新 recipes.json 为准
+  // （否则 localStorage 里的旧路径会把新路径钉死——v0.7.1 png→jpg 后真机白图的根因）
   const photoMap = {};
-  if (saved && saved.recipes) saved.recipes.forEach(r => { if (r.photo) photoMap[r.id] = r.photo; });
+  if (saved && saved.recipes) saved.recipes.forEach(r => { if (r.photo && String(r.photo).indexOf('assets/') !== 0) photoMap[r.id] = r.photo; });
 
   DB = {
     categories: ingRes.categories,
