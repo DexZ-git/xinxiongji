@@ -287,7 +287,7 @@ function viewRecipeDetail() {
   const r = recipe(state.recipeId);
   if (!r) { state.screen = 'recipes'; return viewRecipes(); }
   return `<div class="rowbar"><button class="back" data-action="back-recipe">‹ 返回</button>
-      ${r.user ? `<button class="btn ghost sm danger" data-action="del-user-recipe" data-id="${r.id}">删除</button>` : ''}</div>
+      ${r.user ? `<span><button class="btn ghost sm" data-action="edit-user-recipe" data-id="${r.id}">✏️ 编辑</button><button class="btn ghost sm danger" data-action="del-user-recipe" data-id="${r.id}">删除</button></span>` : ''}</div>
     <div class="rowbar"><h1 style="font-size:24px;margin:2px 0 12px;font-weight:800">${esc(r.name)}</h1>
       <span class="chip">${CAT_EMOJI[r.category] || ''} ${r.category}</span></div>
     <div class="hero dish" ${r.photo ? `data-img="${r.photo}"` : ''}>${r.photo ? '' : (CAT_EMOJI[r.category] || '🍽️')}
@@ -439,7 +439,7 @@ function viewMore() {
       </div>
       <button class="btn block" data-action="lock-device" style="margin-bottom:12px">🔒 锁定本机</button>
     </details>
-    <div class="hint" style="margin-top:16px">新熊记 v0.7 · 菜单与自建菜谱自动同步，图片留本机。</div>`;
+    <div class="hint" style="margin-top:16px">新熊记 v0.8 · 菜单与自建菜谱自动同步，图片留本机。</div>`;
 }
 
 /* ---------- 添加菜谱（本地解析：材料提炼 + 步骤排版） ---------- */
@@ -462,8 +462,34 @@ const ING_ALIAS = {
   'pork-rib': ['排骨'], 'razor-clam': ['蛏子'], hairtail: ['带鱼'], abalone: ['鲍鱼'],
   'sea-snail': ['花螺'], 'fish-ball': ['鱼丸'], egg: ['鸡蛋'], yam: ['山药'], morel: ['羊肚菌'],
   asparagus: ['芦笋'], 'water-spinach': ['通菜', '空心菜'], 'choy-sum': ['菜心'], chives: ['韭菜'],
-  spinach: ['菠菜'], celery: ['西芹', '芹菜'], 'dried-tofu': ['香干'], seaweed: ['紫菜'], zhacai: ['榨菜', '虾皮'],
+  spinach: ['菠菜'], celery: ['西芹', '小香芹', '香芹', '芹菜'], 'dried-tofu': ['香干'], seaweed: ['紫菜'], zhacai: ['榨菜', '虾皮'],
+  'beef-rib': ['牛肋条', '肋条'], daikon: ['白萝卜'], carrot: ['胡萝卜'], 'white-clam': ['白蛤'],
 };
+
+// 形态识别：在“同一逗号段”内向后扫（覆盖“葱姜蒜小米辣切成末”这类隔字形态）；
+// 兜底再看前置量词（“2-3片姜”）。取段内最先出现的形态词，长词优先。
+function detectForm(raw, start, end, used) {
+  const seg = raw.slice(end, end + 10);
+  const stop = seg.search(/[，。；、！？!?,;:\n\r（(）)【】]/);
+  const scope = stop >= 0 ? seg.slice(0, stop) : seg;
+  let best = '', bestPos = Infinity;
+  for (const f of FORMS) {
+    let p = scope.indexOf(f);
+    while (p >= 0) {
+      // 跳过属于其它食材词的字（如"冰糖花椒"的"花"不能当白萝卜的形态）
+      let clash = false;
+      for (let k = end + p; k < end + p + f.length; k++) if (used && used[k]) { clash = true; break; }
+      if (!clash) break;
+      p = scope.indexOf(f, p + 1);
+    }
+    if (p >= 0 && (p < bestPos || (p === bestPos && f.length > best.length))) { best = f; bestPos = p; }
+  }
+  if (best) return best;
+  // 前置："2-3片姜"——紧邻前一个字是单字形态、且再往前是数字/量词
+  const prev = raw[start - 1] || '', prev2 = raw[start - 2] || '';
+  if (FORMS.indexOf(prev) >= 0 && prev.length === 1 && /[0-9０-９一二三四五六七八九十两几半]/.test(prev2)) return prev;
+  return '';
+}
 
 // 备料库比对：最长别名优先、占位防串词（"白胡椒粒"不会再被记成"胡椒"）
 function matchIngredients(raw) {
@@ -475,8 +501,9 @@ function matchIngredients(raw) {
     aliases.forEach(a => list.push({ a, id: it.id }));
   }
   list.sort((x, y) => y.a.length - x.a.length);
+  // 两遍：先把全部食材词占位，再识别形态（形态扫描要避开其它食材词的字）
   const used = new Array(raw.length).fill(false);
-  const hits = {};
+  const found = [];
   for (const { a, id } of list) {
     let idx = raw.indexOf(a);
     while (idx >= 0) {
@@ -484,14 +511,16 @@ function matchIngredients(raw) {
       for (let k = idx; k < idx + a.length; k++) if (used[k]) { free = false; break; }
       if (free) {
         for (let k = idx; k < idx + a.length; k++) used[k] = true;
-        const rest = raw.slice(idx + a.length, idx + a.length + 2);
-        let form = '';
-        for (const f of FORMS) { if (rest.startsWith(f)) { form = f; break; } }
-        if (!hits[id]) hits[id] = new Set();
-        if (form) hits[id].add(form);
+        found.push({ id, start: idx, end: idx + a.length });
       }
       idx = raw.indexOf(a, idx + a.length);
     }
+  }
+  const hits = {};
+  for (const f of found) {
+    const form = detectForm(raw, f.start, f.end, used);
+    if (!hits[f.id]) hits[f.id] = new Set();
+    if (form) hits[f.id].add(form);
   }
   const out = { main: [], aromatics: [], seasonings: [] };
   for (const id in hits) {
@@ -515,6 +544,11 @@ function parseStepsText(raw) {
     return b ? b[1] : null;
   };
   for (const l of lines) {
+    // "- xxx" 子条目：归并进上一条（如 "4）可选配菜：" 下的两个选项），不再拍平成平级步骤
+    if (/^[-•·]/.test(l) && cur && cur.items.length) {
+      cur.items[cur.items.length - 1] += (cur.items[cur.items.length - 1].slice(-1).match(/[：:]/) ? '' : '；') + l.replace(/^[-•·]\s*/, '');
+      continue;
+    }
     const h = header(l);
     if (h !== null) { cur = { group: h, items: [] }; groups.push(cur); continue; }
     const item = l.replace(/^\d{1,2}\s*[）)]\s*/, '').replace(/^[-•·]\s*/, '').replace(/^\d{1,2}\s*[、.．]\s*/, '');
@@ -530,10 +564,15 @@ function captureDraft() {
   const r = document.getElementById('d-raw'); if (r) d.raw = r.value;
 }
 
+// 从已存菜谱反推原文（老数据没存 raw 时的编辑兜底）
+function rawFromRecipe(r) {
+  return (r.steps || []).map((g, i) => (i + 1) + '、' + g.group + '\n' + g.items.map((it, j) => (j + 1) + '）' + it).join('\n')).join('\n');
+}
+
 function viewRecipeEdit() {
   const d = state.draft;
-  let h = `<button class="back" data-action="back-more">‹ 更多</button>
-    <h1 class="op-h1">➕ 添加菜谱</h1>
+  let h = `<button class="back" data-action="back-more">‹ ${d.editId ? '取消' : '更多'}</button>
+    <h1 class="op-h1">${d.editId ? '✏️ 编辑菜谱' : '➕ 添加菜谱'}</h1>
     <div class="form-label">菜名</div>
     <input id="d-name" class="sync-input" type="text" autocomplete="off" placeholder="如：清炒西兰花" value="${esc(d.name)}">
     <div class="form-label">分类</div>
@@ -559,7 +598,7 @@ function viewRecipeEdit() {
       ${(!d.parsed.main.length && !d.parsed.aromatics.length && !d.parsed.seasonings.length) ? '<div class="hint">没识别出材料——检查原文，或直接保存（材料以后可补）。</div>' : ''}
       <div class="sec-title">步骤排版预览</div>
       ${d.parsed.steps.length ? stepsHtml({ steps: d.parsed.steps }) : '<div class="hint">没解析出步骤，检查原文分行。</div>'}
-      <button class="btn primary block" data-action="draft-save" style="margin:10px 0 24px">✅ 保存菜谱</button>`;
+      <button class="btn primary block" data-action="draft-save" style="margin:10px 0 24px">✅ ${d.editId ? '保存修改' : '保存菜谱'}</button>`;
   }
   return h;
 }
@@ -601,22 +640,43 @@ function onClick(e) {
     case 'upload-menu': pendingUpload = { type: 'menu', id }; document.getElementById('filepick').click(); break;
     // 添加菜谱
     case 'new-recipe': state.draft = { name: '', category: DB.categories[0], photo: null, raw: '', parsed: null }; state.screen = 'recipe-edit'; window.scrollTo(0, 0); render(); break;
-    case 'back-more': state.screen = 'more'; window.scrollTo(0, 0); render(); break;
+    case 'back-more': {
+      if (state.draft && state.draft.editId) { state.recipeId = state.draft.editId; state.screen = 'recipe-detail'; }
+      else state.screen = 'more';
+      state.draft = state.screen === 'recipe-edit' ? state.draft : null;
+      window.scrollTo(0, 0); render(); break;
+    }
     case 'draft-cat': captureDraft(); state.draft.category = btn.dataset.cat; render(); break;
     case 'draft-photo': captureDraft(); pendingUpload = { type: 'draft' }; document.getElementById('filepick').click(); break;
     case 'draft-parse': captureDraft(); state.draft.parsed = { ...matchIngredients(state.draft.raw), steps: parseStepsText(state.draft.raw) }; render(); break;
     case 'draft-del-ing': captureDraft(); state.draft.parsed[btn.dataset.g].splice(+btn.dataset.i, 1); render(); break;
+    case 'edit-user-recipe': {
+      const r = recipe(id); if (!r || !r.user) break;
+      state.draft = { editId: r.id, name: r.name, category: r.category, photo: r.photo || null,
+        raw: r.raw || rawFromRecipe(r),
+        parsed: { main: r.main || [], aromatics: r.aromatics || [], seasonings: (r.seasonings || []).map(s => ({ ing: s })), steps: r.steps || [] } };
+      state.screen = 'recipe-edit'; window.scrollTo(0, 0); render(); break;
+    }
     case 'draft-save': {
       captureDraft();
       const d = state.draft;
       if (!d.name.trim()) { alert('先填菜名'); break; }
       if (!d.parsed || !d.parsed.steps.length) { alert('先点「解析并预览」'); break; }
-      const r = { id: 'u' + Date.now(), name: d.name.trim(), category: d.category, photo: d.photo || null,
+      const fields = { name: d.name.trim(), category: d.category, photo: d.photo || null,
         main: d.parsed.main, aromatics: d.parsed.aromatics, seasonings: d.parsed.seasonings.map(s => s.ing),
-        steps: d.parsed.steps, user: true };
-      DB.userRecipes.push(r); rebuildRecipes(); mutate();
+        steps: d.parsed.steps, raw: d.raw, user: true };
+      let rid;
+      if (d.editId) {
+        const r = DB.userRecipes.find(x => x.id === d.editId);
+        if (!r) break;
+        Object.assign(r, fields); rid = r.id;   // 保 id：菜单里的引用不断
+      } else {
+        rid = 'u' + Date.now();
+        DB.userRecipes.push({ id: rid, ...fields });
+      }
+      rebuildRecipes(); mutate();
       state.draft = null; state.tab = 'recipes'; state.catFilter = '全部';
-      state.recipeId = r.id; state.screen = 'recipe-detail'; state._ret = { screen: 'recipes' };
+      state.recipeId = rid; state.screen = 'recipe-detail'; state._ret = { screen: 'recipes' };
       window.scrollTo(0, 0); render(); break;
     }
     case 'del-user-recipe': if (confirm('删除这道自建菜谱？')) {
