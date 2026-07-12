@@ -10,5 +10,8 @@
 5. 环境：Windows，本机有 `perl` + `openssl`，**没有** node/python/pandoc（同熊熊币）。
 6. 部署：计划 GitHub 私有仓库 → Cloudflare Pages 自动部署。菜谱**不敏感**，无需加密词库。
 
+## 月度体检（用户说"体检"时做什么）
+用 `tools/sync_token.local.txt` 里的口令（没有就向用户要一次）调 `https://xiongchef.pages.dev/api/data`（GET 拉 / PUT 写，头 `x-sync-token`），审 `userRecipes`：分类、材料/形态、步骤结构、措辞；缺词补 `data/ingredients.json` 并 push 发版；修正后 PUT 回云端并把 `updatedAt` 设为当前时间戳（用户端自动拉取）。图片在用户本机审不了；体检时段提醒用户勿同时编辑。详见 PRD 第 7 节。
+
 ## 使用者 / 场景（一句话）
 一个人用（太太可能也装一个），一台手机。三件并重的事：**① 有仪式感地定菜单 ② 自动聚合备料/买菜清单 ③ 做菜时随时轻便查这一餐的菜谱**。规模十几~二三十道菜。

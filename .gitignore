@@ -15,3 +15,6 @@ data/recipes.json.bak
 .DS_Store
 Thumbs.db
 assets/_originals/
+
+# 体检用同步口令（本地）
+tools/sync_token.local.txt
