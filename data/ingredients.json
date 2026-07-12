@@ -40,6 +40,7 @@
     { "id": "shallot", "name": "红葱头", "group": "香料配菜", "emoji": "🧅" },
     { "id": "onion", "name": "洋葱", "group": "香料配菜", "emoji": "🧅" },
     { "id": "garlic-sprout", "name": "蒜苗（大蒜叶）", "group": "香料配菜", "emoji": "🌱" },
+    { "id": "cilantro", "name": "香菜", "group": "香料配菜", "emoji": "🌿" },
     { "id": "dried-chili", "name": "干辣椒", "group": "香料配菜", "emoji": "🌶️" },
     { "id": "birdseye-chili", "name": "小米椒", "group": "香料配菜", "emoji": "🌶️" },
     { "id": "pickled-chili", "name": "泡椒", "group": "香料配菜", "emoji": "🌶️" },

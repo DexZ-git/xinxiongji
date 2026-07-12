@@ -463,7 +463,7 @@ const ING_ALIAS = {
   'sea-snail': ['花螺'], 'fish-ball': ['鱼丸'], egg: ['鸡蛋'], yam: ['山药'], morel: ['羊肚菌'],
   asparagus: ['芦笋'], 'water-spinach': ['通菜', '空心菜'], 'choy-sum': ['菜心'], chives: ['韭菜'],
   spinach: ['菠菜'], celery: ['西芹', '小香芹', '香芹', '芹菜'], 'dried-tofu': ['香干'], seaweed: ['紫菜'], zhacai: ['榨菜', '虾皮'],
-  'beef-rib': ['牛肋条', '肋条'], daikon: ['白萝卜'], carrot: ['胡萝卜'], 'white-clam': ['白蛤'],
+  'beef-rib': ['牛肋条', '肋条'], daikon: ['白萝卜'], carrot: ['胡萝卜'], 'white-clam': ['白蛤'], cilantro: ['香菜'],
 };
 
 // 形态识别：在“同一逗号段”内向后扫（覆盖“葱姜蒜小米辣切成末”这类隔字形态）；
